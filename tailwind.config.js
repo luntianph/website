@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,13 +8,27 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {
-			colors: {
-				primary: '#64802C'
+		colors: {
+			transparent: colors.transparent,
+			white: colors.white,
+			gray: colors.gray,
+			yellow: {
+				100: '#C0AB72',
+				700: '#BB801A'
 			},
+			green: {
+				100: '#C6C980',
+				700: '#6A7E39'
+			}, 
+			red: {
+				100: '#D5D0C0',
+				700: '#B88C68'
+			}
+		},
+		extend: {
 			fontFamily: {
-				'luntian': ['Luntian', 'sans-serif'],
-				'serif': ['Luntian', ...defaultTheme.fontFamily.serif]
+				'basteleur': ['Basteleur', ...defaultTheme.fontFamily.serif],
+				'gilroy': ['Gilroy', ...defaultTheme.fontFamily.sans]
 			}
 		},
 	},

@@ -3,19 +3,71 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Luntian";
+  font-family: "Basteleur";
   src: url("../public/fonts/main.woff2");
 }
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-ExtraBold.ttf") format("truetype");
+	font-weight: extrabold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-ExtraBoldItalic.ttf") format("truetype");
+	font-weight: extrabold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-Bold.ttf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-BoldItalic.ttf") format("truetype");
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-Medium.ttf") format("truetype");
+	font-weight: medium;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Gilroy";
+	src: url("../public/fonts/gilroy/Gilroy-MediumItalic.ttf") format("truetype");
+	font-weight: medium;
+	font-style: italic;
+}
+
 
 @layer base {
 	html,
 	body {
-		@apply bg-[#f4f3f2]
+		@apply bg-[#f4f3f2] font-gilroy font-medium
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-gilroy font-extrabold
 	}
 
 	/* forms */
 	select {
-		@apply form-select mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md
+		@apply form-select mt-1 focus:ring-green-700 focus:border-green-700 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md
 	}
 
 	[type="text"], 
@@ -26,7 +78,7 @@
 	[type="email"],
 	[type="date"], 
 	textarea {
-		@apply mt-1 focus:ring-primary focus:border-primary w-full sm:text-sm border-gray-300 block
+		@apply mt-1 focus:ring-green-100 focus:border-green-100 w-full sm:text-sm border-gray-300 block
 	}
 
 	label {
@@ -34,21 +86,21 @@
 	}
 
 	label.required {
-		@apply after:content-['_*'] after:text-red-500
+		@apply after:content-['_*'] after:text-red-700
 	}
 }
 
 @layer components {
 	.form-err-msg {
-		@apply text-red-500 min-h-[20px]
+		@apply text-red-700 min-h-[20px]
 	}
 
 	.btn {
 		@apply cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 py-1;
 	}
 
-	.btn.primary {
-		@apply bg-primary hover:bg-blue-700 active:bg-blue-800 text-white focus:ring-primary;
+	.btn.green {
+		@apply bg-green-700 hover:bg-green-700 active:bg-green-700 text-white focus:ring-green-700;
 	}
 }
 
