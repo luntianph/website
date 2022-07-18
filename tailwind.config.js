@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -5,7 +7,17 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#64802C'
+			},
+			fontFamily: {
+				'luntian': ['Luntian', 'sans-serif'],
+				'serif': ['Luntian', ...defaultTheme.fontFamily.serif]
+			}
+		},
 	},
-	plugins: [],
+	plugins: [
+		require('@tailwindcss/forms')
+	],
 }

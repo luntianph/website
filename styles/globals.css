@@ -2,19 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@font-face {
+  font-family: "Luntian";
+  src: url("../public/fonts/main.woff2");
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+	html,
+	body {
+		@apply bg-[#f4f3f2]
+	}
+
+	/* forms */
+	select {
+		@apply form-select mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md
+	}
+
+	[type="text"], 
+	[type="url"],
+	[type="tel"],
+	[type="number"],
+	[type="password"],
+	[type="email"],
+	[type="date"], 
+	textarea {
+		@apply mt-1 focus:ring-primary focus:border-primary w-full sm:text-sm border-gray-300 block
+	}
+
+	label {
+		@apply block text-sm font-medium text-gray-700
+	}
+
+	label.required {
+		@apply after:content-['_*'] after:text-red-500
+	}
 }
 
-* {
-  box-sizing: border-box;
+@layer components {
+	.form-err-msg {
+		@apply text-red-500 min-h-[20px]
+	}
+
+	.btn {
+		@apply cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 py-1;
+	}
+
+	.btn.primary {
+		@apply bg-primary hover:bg-blue-700 active:bg-blue-800 text-white focus:ring-primary;
+	}
+}
+
+@layer utilities {
+	.h-main-full {
+		min-height: calc(100vh - theme('spacing.16'));
+	}
+
+	.h-main {
+		min-height: calc(100vh - theme('spacing.36'));
+	}
 }
