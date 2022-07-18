@@ -14,10 +14,12 @@ module.exports = {
 			gray: colors.gray,
 			yellow: {
 				100: '#C0AB72',
+				500: '#B49B6C',
 				700: '#BB801A'
 			},
 			green: {
 				100: '#C6C980',
+				500: '#AEB288',
 				700: '#6A7E39'
 			}, 
 			red: {
