@@ -6,12 +6,16 @@
 	@apply py-8 px-4 sm:px-12 mx-auto even:bg-green-50 grid gap-y-8
 }
 
+.header {
+	@apply flex items-center -ml-4 text-green-800
+}
+
 .faq section h2 {
-	@apply font-extrabold text-3xl text-green-800 tracking-wider
+	@apply font-extrabold text-3xl tracking-wider ml-1
 }
 
 .faq section p, .faq section li {
-	@apply max-w-prose text-gray-700
+	@apply max-w-prose text-gray-700 text-justify
 }
 
 .faq .question {

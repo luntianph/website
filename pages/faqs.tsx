@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '@styles/FAQ.module.css'
 import { CONTACT_NUMBER, FACEBOOK_URL } from '@lib/urls'
+import { StarIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 
 const FAQs: NextPage = () => {
@@ -17,7 +18,10 @@ const FAQs: NextPage = () => {
 			</section>
 
 			<section>
-				<h2>PRODUCT</h2>
+				<div className={styles.header}>
+					<Image src="/mailer-icon.png" alt="Mailer Icon" width={48} height={53} />
+					<h2>PRODUCT</h2>
+				</div>
 				<div>
 					<p className={styles.question}>How many days do your compostable products compost?</p>
 					<p>When placed in a <strong>compost container/bin</strong>, the bubble wrap
@@ -46,7 +50,10 @@ const FAQs: NextPage = () => {
 			</section>
 
 			<section>
-				<h2>DELIVERY</h2>
+				<div className={styles.header}>
+					<StarIcon className="w-8" />
+					<h2>DELIVERY</h2>
+				</div>
 				<div>
 					<p className={styles.question}>Do you offer same-day deliveries?</p>
 					<p>Yes we do! You can inquire on our <a href={FACEBOOK_URL}>Facebook page</a> or contact us at {CONTACT_NUMBER + ' '}
@@ -80,7 +87,10 @@ const FAQs: NextPage = () => {
 				</div>
 			</section>
 			<section>
-				<h2>MATERIAL</h2>
+				<div className={styles.header}>
+					<Image src="/mailer-icon.png" alt="Mailer Icon" width={48} height={53} />
+					<h2>MATERIAL</h2>
+				</div>
 				<div>
 					<p className={styles.question}>What are your compost certifications?</p>
 					<div className={styles.certifications}>
@@ -141,6 +151,11 @@ const FAQs: NextPage = () => {
 			</section>
 
 			<section className={styles.citations}>
+				<cite>
+					<a href="https://www.naturefresh.ca/bpi-certification-why-it-matters/">
+						What is a BPI Certification &amp; Why does it matter? Nature Fresh Farms. (2021, April 23). Retrieved July 19, 2022.
+					</a>
+				</cite>
 				<cite>
 					<a href="https://www.urthpact.com/certified-compostable-products-what-to-look-for-and-what-it-means/ ">
 						Plainvanilla. (2021, February 22). Certified compostable products: What to look for and what it means. UrthPact.
