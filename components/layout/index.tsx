@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
 import Header from './header'
 import { useSession } from 'next-auth/react'
+import URLs from '@lib/urls'
 
 export const siteTitle = 'Luntian'
 
@@ -39,12 +40,12 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 					<p className="text-2xl text-center font-basteleur text-green-800 mb-2">Your one-stop sustainable packaging shop.</p>
 					<div className="contents text-brown-400 text-xl font-extrabold">
 						<div>
-							<a className="footer-link" title="Luntian Facebook" href="https://www.facebook.com/luntianofficialph">FB</a>
-							<a className="footer-link" title="Luntian Tiktok" href="https://www.tiktok.com/@luntianofficialph"> TikTok</a>
-							<a className="footer-link" title="Luntian Instagram" href="https://www.instagram.com/luntianofficialph/"> IG</a>
+							<a className="footer-link" title="Luntian Facebook" href={URLs.facebook}>FB</a>
+							<a className="footer-link" title="Luntian Tiktok" href={URLs.tiktok}> TikTok</a>
+							<a className="footer-link" title="Luntian Instagram" href={URLs.ig}> IG</a>
 							<span>: @luntianofficialph</span>
 						</div>
-						<a href="https://shopee.ph/luntiancompanyph" className="footer-link">Shopee: @luntiancompanyph</a>
+						<a href={URLs.shopee} className="footer-link">Shopee: @luntiancompanyph</a>
 					</div>
 				</div>
 			</footer>

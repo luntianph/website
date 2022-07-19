@@ -10,50 +10,35 @@
 @font-face {
 	font-family: "Gilroy";
 	src: url("../public/fonts/gilroy/Gilroy-ExtraBold.ttf") format("truetype");
-	font-weight: extrabold;
+	font-weight: 800;
 	font-style: normal;
-}
-
-@font-face {
-	font-family: "Gilroy";
-	src: url("../public/fonts/gilroy/Gilroy-ExtraBoldItalic.ttf") format("truetype");
-	font-weight: extrabold;
-	font-style: italic;
 }
 
 @font-face {
 	font-family: "Gilroy";
 	src: url("../public/fonts/gilroy/Gilroy-Bold.ttf") format("truetype");
-	font-weight: bold;
+	font-weight: 700;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "Gilroy";
-	src: url("../public/fonts/gilroy/Gilroy-BoldItalic.ttf") format("truetype");
-	font-weight: bold;
-	font-style: italic;
+	src: url("../public/fonts/gilroy/Gilroy-SemiBold.ttf") format("truetype");
+	font-weight: 600;
+	font-style: normal;
 }
 
 @font-face {
 	font-family: "Gilroy";
 	src: url("../public/fonts/gilroy/Gilroy-Medium.ttf") format("truetype");
-	font-weight: medium;
+	font-weight: 500;
 	font-style: normal;
 }
-
-@font-face {
-	font-family: "Gilroy";
-	src: url("../public/fonts/gilroy/Gilroy-MediumItalic.ttf") format("truetype");
-	font-weight: medium;
-	font-style: italic;
-}
-
 
 @layer base {
 	html,
 	body {
-		@apply bg-[#f4f3f2] font-gilroy font-medium
+		@apply bg-[#f4f3f2] font-gilroy font-medium text-gray-800
 	}
 
 	h1,
@@ -88,6 +73,10 @@
 	label.required {
 		@apply after:content-['_*'] after:text-red-700
 	}
+
+	p a, li a, cite a {
+	 @apply underline hover:text-green-700 transition-colors
+	}
 }
 
 @layer components {
@@ -121,21 +110,19 @@
 		min-height: calc(100vh - theme('spacing.56') - 4px);
 	}
 
-	@variants responsive {
-		.text-shadow-sm {
-			text-shadow: 1px 1px 2px black;
-		}
-		.text-shadow {
-			text-shadow: 2px 2px 4px black;
-		}
-		.text-shadow-md {
-			text-shadow: 4px 4px 8px black;
-		}
-		.text-shadow-lg {
-			text-shadow: 15px 15px 30px black;
-		}
-		.text-shadow-none {
-			text-shadow: none;
-		}
+	.text-shadow-sm {
+		text-shadow: 1px 1px 2px black;
+	}
+	.text-shadow {
+		text-shadow: 2px 2px 4px black;
+	}
+	.text-shadow-md {
+		text-shadow: 4px 4px 8px black;
+	}
+	.text-shadow-lg {
+		text-shadow: 15px 15px 30px black;
+	}
+	.text-shadow-none {
+		text-shadow: none;
 	}
 }

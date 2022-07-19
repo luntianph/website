@@ -1,9 +1,13 @@
+import Head from 'next/head'
 import Image from 'next/image'
 import { FC } from 'react'
 
 const AboutUs: FC = () => {
 	return (
 		<div className="container mx-auto px-4">
+			<Head>
+				<title>Luntian | About Us</title>
+			</Head>
 			<section className="grid place-items-center">
 				<Image src="/logo.png" alt="Luntian Logo" width={300} height={300} />
 				<p className="max-w-prose text-justify mb-4">

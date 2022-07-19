@@ -1,0 +1,47 @@
+.faq {
+	@apply grid gap-y-8 mt-10 mb-20 h-min
+}
+
+.faq section {
+	@apply py-8 px-4 sm:px-12 mx-auto even:bg-green-50 grid gap-y-8
+}
+
+.faq section h2 {
+	@apply font-extrabold text-3xl text-green-800 tracking-wider
+}
+
+.faq section p, .faq section li {
+	@apply max-w-prose text-gray-700
+}
+
+.faq .question {
+	@apply text-brown-800 font-bold text-lg
+}
+
+.delivery-list {
+	@apply my-6
+}
+
+.delivery-list li {
+	@apply before:content-['🌿_'] font-semibold
+}
+
+.certifications {
+	@apply grid mt-6 lg:mt-4 lg:grid-cols-[128px_1fr] gap-y-4 gap-x-6 place-items-center
+}
+
+.certifications h3 {
+	@apply text-lg mb-1
+}
+
+.certifications ul {
+	@apply my-4
+}
+
+.certifications li {
+	@apply before:content-['-_']
+}
+
+.faq .citations {
+	@apply text-xs gap-y-1
+}
