@@ -31,7 +31,7 @@ const ContactUs: NextPage = () => {
 	}
 
 	return (
-		<div className="container mx-auto place-self-center px-4 sm:px-0 mt-6 sm:mt-0">
+		<div className="container mx-auto place-self-center px-4 sm:px-0 mt-14 mb-24">
 			<Head>
 				<title>Contact Us | Luntian</title>
 			</Head>

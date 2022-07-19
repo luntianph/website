@@ -33,22 +33,18 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 			<main className="h-main grid">
 				{children}
 			</main>
-			<footer className="text-gray-500 h-20 md:h-30 px-4 md:px-8">
-				<div className="flex justify-between items-center min-h-full mx-auto container">
-					<div>
-						<p className="md:text-lg text-sm font-medium">Lunas ang Tinig ng Animo<br /> </p>
-						<p className="text-sm">Your one-stop sustainable packaging shop.</p>
-					</div>
-					<div>
-						<a className="footer-icon" title="Luntian Facebook Page" href="https://www.facebook.com/pts.dlsu/">
-							<i className="fa-brands fa-facebook fa-xl"></i>
-						</a>
-						<a className="footer-icon" title="Luntian Twitter Profile" href="https://twitter.com/ptsdlsu">
-							<i className="fa-brands fa-twitter fa-xl"></i>
-						</a>
-						<a className="footer-icon" title="Luntian Email Address" href="mailto:pts@dlsu.edu.ph">
-							<i className="fa-solid fa-envelope fa-xl"></i>
-						</a>
+			<footer className="bg-green-400 px-4 md:px-8 py-4">
+				<div className="grid place-items-center min-h-full mx-auto container">
+					<p className="text-2xl text-center font-extrabold text-brown-700 mb-1">Be part of the 1%.</p>
+					<p className="text-2xl text-center font-basteleur text-green-800 mb-2">Your one-stop sustainable packaging shop.</p>
+					<div className="contents text-brown-400 text-xl font-extrabold">
+						<div>
+							<a className="footer-link" title="Luntian Facebook" href="https://www.facebook.com/luntianofficialph">FB</a>
+							<a className="footer-link" title="Luntian Tiktok" href="https://www.tiktok.com/@luntianofficialph"> TikTok</a>
+							<a className="footer-link" title="Luntian Instagram" href="https://www.instagram.com/luntianofficialph/"> IG</a>
+							<span>: @luntianofficialph</span>
+						</div>
+						<a href="https://shopee.ph/luntiancompanyph" className="footer-link">Shopee: @luntiancompanyph</a>
 					</div>
 				</div>
 			</footer>

@@ -30,9 +30,9 @@ const MobNavItem: FC<MobNavItemProp> = ({ text, path, isHome, onClick }) => {
 	const isMatch = matchPath(pathname, path, isHome)
 
 	const className = cn({
-		'border-blue-500 text-gray-900 bg-blue-50 text-blue-600': isMatch,
-		'border-transparent text-gray-500 hover:text-gray-900': !isMatch,
-	}, 'border-l-4 block px-3 py-2 text-base font-medium cursor-pointer')
+		'border-green-500 text-gray-900 bg-gray-100 text-green-700': isMatch,
+		'border-transparent text-gray-500 hover:text-gray-900 hover:bg-gray-50': !isMatch,
+	}, 'border-l-4 block px-3 py-2 text-base font-medium cursor-pointer transition-colors')
 
 	return (
 		<Link href={path}>
@@ -76,7 +76,7 @@ const Header: FC = () => {
 								<div className="flex-1 flex items-center h-full justify-center lg:items-stretch lg:justify-start">
 									<Link href="/">
 										<a className="flex-shrink-0 -mb-1 flex items-center cursor-pointer font-basteleur text-green-700 text-2xl">
-											Luntian
+											LUNTIAN
 										</a>
 									</Link>
 									<div className="hidden lg:block lg:ml-6">

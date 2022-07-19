@@ -102,6 +102,14 @@
 	.btn.green {
 		@apply bg-green-700 hover:bg-green-700 active:bg-green-700 text-white focus:ring-green-700;
 	}
+
+	.footer-link {
+		@apply hover:text-green-700 transition-colors
+	}
+
+	.footer-link + .footer-link {
+		@apply before:content-['_|']
+	}
 }
 
 @layer utilities {
@@ -110,6 +118,6 @@
 	}
 
 	.h-main {
-		min-height: calc(100vh - theme('spacing.36'));
+		min-height: calc(100vh - theme('spacing.56') - 4px);
 	}
 }
