@@ -31,6 +31,7 @@ module.exports = {
 			brown: {
 				400: '#818162',
 				700: '#826e4b',
+				800: '#7b736f',
 			}
 		},
 		extend: {

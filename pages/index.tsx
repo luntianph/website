@@ -1,16 +1,52 @@
 import type { NextPage } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from '@styles/Home.module.css'
+import { ChevronRightIcon } from '@heroicons/react/outline'
 
 const Home: NextPage = () => {
 	return (
-		<section>
-			<h4>Introducing:</h4>
-			<h3 className="font-basteleur text-yellow-500">1% Compostable Kraft Bubble Mailer</h3>
-			<p className="max-w-prose text-sm">
-				First-ever in the Philippines. The 1% Compostable Bubble Mailers are your perfect and
-				sustainable alternative to harmful packaging plastics such as bubble wraps, tapes, saran wrap,
-				and more that takes 20 to 500 years to decompose! Make the switch today for you, others, and Mama🌏.
-			</p>
-		</section>
+		<div className="grid h-min gap-y-16 mt-10 mb-20">
+			<section className="flex justify-center px-4">
+				<div className="grid place-items-center md:grid-flow-col gap-8">
+					<div className="p-6 aspect-square rounded-full bg-green-500 justify-center">
+						<Image src="/small-mailer.png" alt="Small mailer" width={200} height={200} />
+					</div>
+					<div>
+						<h4 className="text-2xl text-brown-800 mb-3">Introducing:</h4>
+						<h3 className="font-basteleur text-yellow-500 text-3xl mb-3">1% Compostable Kraft Bubble Mailer</h3>
+						<p className="max-w-prose text-sm text-brown-400">
+							First-ever in the Philippines. The 1% Compostable Bubble Mailers are your perfect and
+							sustainable alternative to harmful packaging plastics such as bubble wraps, tapes, saran wrap,
+							and more that takes 20 to 500 years to decompose! Make the switch today for you, others, and Mama🌏.
+						</p>
+						<div className="flex justify-end">
+							<button>Learn More</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="bg-[url('/bg-photo.jpg')] bg-no-repeat bg-cover bg-green-500 bg-blend-multiply py-12 px-4">
+				<div className="grid place-items-center max-w-xl mx-auto gap-y-6">
+					<h1 className="font-basteleur text-white text-6xl mb-4 text-shadow">Shop Now!</h1>
+					<Link href="/products">
+						<a className={styles['link-btn'] + ' group'}>
+							<span>Our Products</span>
+							<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+						</a>
+					</Link>
+					<a className={styles['link-btn'] + ' group'}>
+						<span>Non-Shopee Checkout</span>
+						<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+					</a>
+					<a className={styles['link-btn'] + ' group'}>
+						<span>Shopee Checkout</span>
+						<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+					</a>
+				</div>
+			</section>
+		</div>
 	)
 }
 

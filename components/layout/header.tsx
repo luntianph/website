@@ -61,7 +61,7 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 
 const Header: FC = () => {
 	return (
-		<header className="h-16 border-b border-gray-200 relative z-50">
+		<header className="h-16 lg:px-2 border-b bg-white border-gray-200 relative z-50">
 			<Disclosure as="nav" className="bg-white h-full">
 				{({ open, close }) => (
 					<>
