@@ -5,11 +5,11 @@ import styles from '@styles/Composting.module.css'
 const Care: NextPage = () => {
 	return (
 		<div className="grid h-min mt-10 mb-20 gap-y-8">
-			<div className="text-green-700 flex items-center justify-center">
+			<div className={styles.header}>
 				<Image className="-rotate-12" src="/small-mailer.png" alt="Small Mailer" width={150} height={150} />
 				<div>
-					<h1 className="font-basteleur text-5xl mb-2">How to Compost</h1>
-					<h2 className="text-xl">Here&apos;s how you can compost LUNTIAN&apos;s products</h2>
+					<h1>How to Compost</h1>
+					<h2>Here&apos;s how you can compost LUNTIAN&apos;s products</h2>
 				</div>
 			</div>
 			<div className={styles.composting}>
@@ -52,22 +52,22 @@ const Care: NextPage = () => {
 							1% challenge achieved! Show us your home composting journey by mentioning @luntianofficialph in FB/IG
 						</p>
 					</div>
-					<div className="flex mt-8 w-96 mx-auto items-center justify-center">
+					<div className="flex mt-8 md:w-96 mx-auto items-center justify-center">
 						<div className="-rotate-12">
 							<Image src="/compost/instructions.png" alt="instructions" width={90} height={144} />
 						</div>
-						<p className="text-green-800 text-xl font-bold ml-8 w-56">Get your free printable instruction card {' '}
+						<p className="text-green-800 text-xl font-bold ml-8 md:w-56">Get your free printable instruction card {' '}
 							<a target="blank" href="https://drive.google.com/uc?export=download&amp;id=1iNnKHSgXUcsdV2Uxp_RM0oxuHjCyIMul" rel="noreferrer">
 								here!</a>
 						</p>
 					</div>
 				</div>
 			</div>
-			<div className="text-green-700 flex items-center justify-center">
+			<div className={styles.header}>
 				<Image className="-rotate-12" src="/small-mailer.png" alt="Small Mailer" width={150} height={150} />
 				<div>
-					<h1 className="font-basteleur text-5xl mb-2">Care Instructions</h1>
-					<h2 className="text-xl">How to take care and preserve the condition of 1% mailers</h2>
+					<h1>Care Instructions</h1>
+					<h2>How to take care and preserve the condition of 1% mailers</h2>
 				</div>
 			</div>
 			<div className="max-w-4xl bg-green-50 rounded-md mx-auto w-full py-8 px-4 flex justify-center">

@@ -14,3 +14,15 @@
 .composting > div:nth-child(odd):not(:last-child) {
 	@apply relative aspect-square w-32 md:justify-self-end justify-self-center
 }
+
+.header {
+	@apply text-green-700 flex items-center justify-center px-2
+}
+
+.header h1 {
+	@apply font-basteleur text-3xl sm:text-5xl mb-2
+}
+
+.header h2 {
+	@apply text-base sm:text-xl
+}
