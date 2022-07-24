@@ -24,12 +24,12 @@ const Care: NextPage = () => {
 					<h3>Step 2: Compile the compost materials that you will need.
 						These are biodegradable that can be found in your own household
 					</h3>
-					<p className="my-4">Common things you may use are paper, twigs, dead leaves, paper, egg shells, fruit peels, unused vegetable parts and the like.</p>
+					<p className="my-4 w-3/4 sm:w-auto">Common things you may use are paper, twigs, dead leaves, paper, egg shells, fruit peels, unused vegetable parts and the like.</p>
 					<p className="w-3/4">
 						Don&apos;t forget to add the used 1% Compostable Mailer and it is preferably more effective when
 						the materials stated are cut or shredded into smaller pieces and the adhesive area is removed.
 					</p>
-					<div className="absolute -right-4 sm:right-0 md:right-8 -bottom-14">
+					<div className="absolute -right-4 top-[45%] sm:right-0 md:right-8 -bottom-14">
 						<Image src="/compost/3.png" alt="Luntian Mailer" width={111} height={145} />
 					</div>
 				</div>

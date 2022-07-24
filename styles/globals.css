@@ -107,7 +107,7 @@
 	}
 
 	.h-main {
-		min-height: calc(100vh - theme('spacing.56') - 4px);
+		min-height: calc(100vh - theme('spacing.60') - 14px);
 	}
 
 	.text-shadow-sm {
