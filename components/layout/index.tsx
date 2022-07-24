@@ -4,6 +4,8 @@ import { FC, ReactNode } from 'react'
 import Header from './header'
 import { useSession } from 'next-auth/react'
 import URLs from '@lib/urls'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 
 export const siteTitle = 'Luntian'
 
@@ -34,18 +36,26 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 			<main className="h-main grid">
 				{children}
 			</main>
-			<footer className="bg-green-400 px-4 md:px-8 py-4">
+			<footer className="bg-[#E6dECA] px-4 md:px-8 py-8">
 				<div className="grid place-items-center min-h-full mx-auto container">
-					<p className="text-2xl text-center font-extrabold text-brown-700 mb-1">Be part of the 1%.</p>
-					<p className="text-2xl text-center font-basteleur text-green-800 mb-2">Your one-stop sustainable packaging shop.</p>
+					<p className="text-4xl text-center font-basteleur font-extrabold text-[#61966A] mb-1">Lunas ang Tinig ng Animo</p>
+					<p className="text-lg text-center font-bold text-[#BD7B70] mb-2">Your one-stop sustainable packaging shop.</p>
 					<div className="contents text-brown-400 text-xl font-extrabold">
-						<div>
-							<a className="footer-link" title="Luntian Facebook" href={URLs.facebook}>FB</a>
-							<a className="footer-link" title="Luntian Tiktok" href={URLs.tiktok}> TikTok</a>
-							<a className="footer-link" title="Luntian Instagram" href={URLs.ig}> IG</a>
-							<span>: @luntianofficialph</span>
+						<div className="grid grid-flow-col gap-x-3 text-4xl items-center">
+							<a href={URLs.facebook}>
+								<FontAwesomeIcon title="Facebook page" icon={faFacebook} />
+							</a>
+							<div className="bg-[#818162] text-[#E6dECA] rounded-full w-9 aspect-square grid place-items-center text-2xl">
+								<a href={URLs.ig}>
+									<FontAwesomeIcon title="Instagram profile" icon={faInstagram} />
+								</a>
+							</div>
+							<div className="bg-[#818162] text-[#E6dECA] rounded-full w-9 aspect-square grid place-items-center text-2xl">
+								<a href={URLs.tiktok}>
+									<FontAwesomeIcon title="Tiktok profile" icon={faTiktok} />
+								</a>
+							</div>
 						</div>
-						<a href={URLs.shopee} className="footer-link">Shopee: @luntiancompanyph</a>
 					</div>
 				</div>
 			</footer>
