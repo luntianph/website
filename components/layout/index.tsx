@@ -4,8 +4,7 @@ import { FC, ReactNode } from 'react'
 import Header from './header'
 import { useSession } from 'next-auth/react'
 import URLs from '@lib/urls'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
+import Image from 'next/image'
 
 export const siteTitle = 'Luntian'
 
@@ -38,24 +37,18 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 			</main>
 			<footer className="bg-[#E6dECA] px-4 md:px-8 py-8">
 				<div className="grid place-items-center min-h-full mx-auto container">
-					<p className="text-4xl text-center font-basteleur font-extrabold text-[#61966A] mb-1">Lunas ang Tinig ng Animo</p>
+					<p className="text-2xl sm:text-4xl text-center font-basteleur font-extrabold text-[#61966A] mb-1">Lunas ang Tinig ng Animo</p>
 					<p className="text-lg text-center font-bold text-[#BD7B70] mb-2">Your one-stop sustainable packaging shop.</p>
-					<div className="contents text-brown-400 text-xl font-extrabold">
-						<div className="grid grid-flow-col gap-x-3 text-4xl items-center">
-							<a href={URLs.facebook}>
-								<FontAwesomeIcon title="Facebook page" icon={faFacebook} />
-							</a>
-							<div className="bg-[#818162] text-[#E6dECA] rounded-full w-9 aspect-square grid place-items-center text-2xl">
-								<a href={URLs.ig}>
-									<FontAwesomeIcon title="Instagram profile" icon={faInstagram} />
-								</a>
-							</div>
-							<div className="bg-[#818162] text-[#E6dECA] rounded-full w-9 aspect-square grid place-items-center text-2xl">
-								<a href={URLs.tiktok}>
-									<FontAwesomeIcon title="Tiktok profile" icon={faTiktok} />
-								</a>
-							</div>
-						</div>
+					<div className="grid grid-flow-col gap-x-3 text-4xl items-center">
+						<a href={URLs.facebook}>
+							<Image src="/brands/fb.png" alt="Facebook" width={39} height={39} />
+						</a>
+						<a href={URLs.ig}>
+							<Image src="/brands/ig.png" alt="Instagram" width={39} height={39} />
+						</a>
+						<a href={URLs.tiktok}>
+							<Image src="/brands/tiktok.png" alt="Tiktok" width={39} height={39} />
+						</a>
 					</div>
 				</div>
 			</footer>
