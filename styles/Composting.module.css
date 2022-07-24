@@ -1,6 +1,7 @@
 .composting {
-	@apply bg-green-50 rounded max-w-4xl mx-auto p-8 grid 
-		md:grid-cols-[200px_1fr] gap-y-8 gap-x-4 text-[#414141] items-center
+	@apply bg-green-50 rounded max-w-4xl mx-auto p-8 grid
+		md:grid-cols-[128px_1fr] gap-y-8 gap-x-4 text-[#414141] items-center
+		text-justify
 }
 
 .composting h3 {
