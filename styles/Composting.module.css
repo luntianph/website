@@ -1,0 +1,16 @@
+.composting {
+	@apply bg-green-50 rounded max-w-4xl mx-auto p-8 grid 
+		md:grid-cols-[200px_1fr] gap-y-8 gap-x-4 text-[#414141] items-center
+}
+
+.composting h3 {
+	@apply font-semibold text-xl
+}
+
+.composting p {
+	@apply max-w-prose
+}
+
+.composting > div:nth-child(odd):not(:last-child) {
+	@apply relative aspect-square w-32 md:justify-self-end justify-self-center
+}
