@@ -1,10 +1,14 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 import styles from '@styles/Composting.module.css'
+import Head from 'next/head'
 
 const Care: NextPage = () => {
 	return (
 		<div className="grid h-min mt-10 mb-20 gap-y-8">
+			<Head>
+				<title>Luntian | Composting</title>
+			</Head>
 			<div className={styles.header}>
 				<Image className="-rotate-12" src="/small-mailer.png" alt="Small Mailer" width={100} height={100} />
 				<div>

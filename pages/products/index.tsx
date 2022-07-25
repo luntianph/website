@@ -1,8 +1,12 @@
 import { NextPage } from 'next';
+import Head from 'next/head';
 
-const Products:  NextPage = () => {
+const Products: NextPage = () => {
 	return (
 		<>
+			<Head>
+				<title>Luntian | Products</title>
+			</Head>
 		</>
 	)
 }

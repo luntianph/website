@@ -33,7 +33,7 @@ const ContactUs: NextPage = () => {
 	return (
 		<div className="container mx-auto place-self-center px-4 sm:px-0 mt-14 mb-24">
 			<Head>
-				<title>Contact Us | Luntian</title>
+				<title>Luntian | Contact Us</title>
 			</Head>
 
 			<form className="max-w-xl grid gap-y-2 mx-auto" onSubmit={handleSubmit(onSubmit)}>
