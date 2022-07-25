@@ -1,0 +1,5 @@
+.panel {
+	@apply relative inline-block align-bottom w-full bg-[#F4F3F2] rounded-lg 
+	text-left overflow-hidden shadow-xl transition-all transform-none
+	sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full
+}
