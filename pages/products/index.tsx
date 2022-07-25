@@ -1,14 +1,38 @@
-import { NextPage } from 'next';
-import Head from 'next/head';
+import dbConnect from '@lib/db'
+import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import Products from '@models/product'
 
-const Products: NextPage = () => {
+const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ products }) => {
 	return (
-		<>
+		<div className="grid gap-x-4 gap-y-8 mt-10 mb-20 sm:grid-cols-2 px-4 container mx-auto max-w-3xl">
 			<Head>
 				<title>Luntian | Products</title>
 			</Head>
-		</>
+			{products.map(p =>
+				<div key={p._id} className="cursor-pointer">
+					<div className="relative aspect-square w-full">
+						<Image src={p.images[0]} alt="An image" layout="fill" />
+					</div>
+					<h3 className="text-[#79834c] font-bold">{p.name}</h3>
+					<p className="text-sm text-gray-600">₱{p.price.toFixed(2)}</p>
+				</div>
+			)}
+		</div>
 	)
 }
 
-export default Products
+export const getStaticProps = async ({ }: GetStaticPropsContext) => {
+	await dbConnect()
+	const products = await Products.find({}, 'name price images').lean()
+	products.forEach(p => p._id = p._id.toString())
+
+	return {
+		props: {
+			products
+		}
+	}
+}
+
+export default ProductsPage
