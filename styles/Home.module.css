@@ -1,5 +1,6 @@
 .link-btn {
 	@apply flex justify-between py-6 px-8 w-full 
-	bg-gray-900 bg-opacity-80 text-white
-		rounded-full hover:bg-green-800 transition-colors
+	bg-[#4A3F37] bg-opacity-[0.64] text-white
+		rounded-full hover:bg-[#518764] hover:bg-opacity-[0.66]
+		hover:font-semibold transition-colors
 }

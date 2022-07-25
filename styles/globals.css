@@ -74,6 +74,10 @@
 		@apply after:content-['_*'] after:text-red-700
 	}
 
+	p {
+		@apply text-justify
+	}
+
 	p a, li a, cite a {
 	 @apply underline hover:text-green-700 transition-colors
 	}

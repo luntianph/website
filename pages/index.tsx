@@ -11,10 +11,16 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Carousel from '@components/carousel'
 import { XCircleIcon } from '@heroicons/react/solid'
+import { toastError, toastSuccess } from '@lib/toast-defaults'
+import app from '@lib/axios-config'
+import axios from 'axios'
 
 const formSchema = object({
 	email: string().email('Invalid email format!').required('Email is required!')
 })
+
+const modalKey = 'newsletterModal'
+const dateKey = 'visit'
 
 type FormSchema = InferType<typeof formSchema>
 
@@ -24,12 +30,37 @@ const Home: NextPage = () => {
 	})
 	const [isOpen, setIsOpen] = useState(false)
 
-	function onSubmit(data: FormSchema) {
-		console.log(data);
+	async function onSubmit(data: FormSchema) {
+		try {
+			await app.post('/api/subscribers', data)
+			setIsOpen(false)
+			toastSuccess('You have successfully signed up for our newsletter!')
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				toastError(e?.response?.data as string)
+			}
+		}
 	}
 
+	// shows modal only once in a week
 	useEffect(() => {
-		const timer = setTimeout(() => setIsOpen(true), 5000)
+		const dateValue = localStorage.getItem(dateKey)
+		if (dateValue == null) {
+			localStorage.setItem(dateKey, new Date().toString())
+		} else {
+			const time = new Date(dateValue).getTime()
+			if (new Date().getTime() - time > 604800) {
+				localStorage.removeItem(modalKey)
+			}
+		}
+
+		// shows modal in 5 seconds
+		const timer = setTimeout(() => {
+			if (localStorage.getItem(modalKey) == null) {
+				setIsOpen(true)
+				localStorage.setItem(modalKey, 'true')
+			}
+		}, 5000)
 		return () => clearTimeout(timer)
 	}, [])
 
@@ -78,7 +109,7 @@ const Home: NextPage = () => {
 						<div>
 							<h4 className="text-2xl text-brown-800 mb-3">Introducing:</h4>
 							<h3 className="font-basteleur text-yellow-500 text-3xl mb-3">1% Compostable Kraft Bubble Mailer</h3>
-							<p className="max-w-prose text-sm text-brown-400">
+							<p className="max-w-prose text-sm text-brown-400 text-justify">
 								First-ever in the Philippines. The 1% Compostable Bubble Mailers are your perfect and
 								sustainable alternative to harmful packaging plastics such as bubble wraps, tapes, saran wrap,
 								and more that takes 20 to 500 years to decompose! Make the switch today for you, others, and Mama🌏.
@@ -90,8 +121,9 @@ const Home: NextPage = () => {
 					</div>
 				</section>
 
-				<section className="bg-[url('/bg-photo.jpg')] bg-no-repeat bg-cover bg-green-500 bg-blend-multiply py-12 px-4">
-					<div className="grid place-items-center max-w-xl mx-auto gap-y-6">
+				<section className="relative">
+					<div className="w-full h-full absolute bg-[url('/bg-photo.jpg')] bg-no-repeat bg-cover bg-[#BBB880] bg-blend-multiply opacity-75" />
+					<div className="grid place-items-center max-w-xl mx-auto gap-y-6 py-12 px-4 relative z-10">
 						<h1 className="font-basteleur text-white text-6xl mb-4 text-shadow">Shop Now!</h1>
 						<Link href="/products">
 							<a className={styles['link-btn'] + ' group'}>
