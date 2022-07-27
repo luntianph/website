@@ -26,7 +26,7 @@ const productSchema = new Schema<Product>({
 	color: { type: String, required: true },
 	companyConditions: { type: String, required: true },
 	measurements: { type: String, required: true },
-	images: { type: String, required: true }
+	images: { type: [String], required: true }
 })
 
 export default models?.Product as Model<Document & Product> || model<Product>('Product', productSchema, 'products')
