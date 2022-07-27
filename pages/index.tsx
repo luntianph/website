@@ -91,7 +91,7 @@ const Home: NextPage = () => {
 					</div>
 				</div>
 			</Modal>
-			<div className="grid h-min gap-y-16 mt-10 mb-20">
+			<div className="grid h-min gap-y-16 lg:mt-10 mb-20">
 				<section>
 					<div className="max-w-4xl mx-auto">
 						<Carousel images={[

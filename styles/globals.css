@@ -81,6 +81,14 @@
 	p a, li a, cite a {
 	 @apply underline hover:text-green-700 transition-colors
 	}
+
+	details > summary {
+		@apply list-none select-none
+	}
+
+	details summary::-webkit-details-marker {
+		@apply hidden
+	}
 }
 
 @layer components {
