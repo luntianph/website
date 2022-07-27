@@ -6,9 +6,7 @@ const LoadingSpinner: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
 
 	return (
 		<div className={cn}>
-			<div className="spinner-border animate-spin inline-block w-20 h-20 border-8 rounded-full text-green-700" role="status">
-				<span className="visually-hidden">Loading...</span>
-			</div>
+			<div className="w-20 aspect-square border-t-transparent border-8 border-solid rounded-full animate-spin border-green-700" role="status" />
 		</div>
 	)
 }
