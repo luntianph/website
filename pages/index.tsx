@@ -44,12 +44,11 @@ const Home: NextPage = () => {
 
 	// shows modal only once in a week
 	useEffect(() => {
-		const dateValue = localStorage.getItem(dateKey)
-		if (dateValue == null) {
-			localStorage.setItem(dateKey, new Date().toString())
+		const time = localStorage.getItem(dateKey)
+		if (time == null) {
+			localStorage.setItem(dateKey, new Date().getTime().toString())
 		} else {
-			const time = new Date(dateValue).getTime()
-			if (new Date().getTime() - time > 604800) {
+			if (new Date().getTime() - Number(time) > 604800) {
 				localStorage.removeItem(modalKey)
 			}
 		}
