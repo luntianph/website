@@ -1,16 +1,27 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import Products from '@models/product'
+import Products, { IProduct } from '@models/product'
 import dbConnect from '@lib/db'
+import { IMaterial } from '@models/material'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export type APIProduct = Omit<IProduct, 'materials'> & {
+	materials: Pick<IMaterial, 'items'>
+}
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct>) => {
 	const { query, method } = req
 
 	try {
 		switch (method) {
 			case 'GET': {
 				await dbConnect()
-				const product = await Products.findById(query.id).lean()				
-				res.json(product)
+				const product = await Products
+					.findById(query.id, '-_id -__v')
+					.populate({
+						path: 'materials',
+						select: '-_id items'
+					}).lean()
+
+				res.json(product as APIProduct)
 				break
 			}
 

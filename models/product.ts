@@ -1,12 +1,11 @@
-import { Model, Schema, models, model, Document } from 'mongoose'
+import { Model, Schema, models, model, Document, ObjectId } from 'mongoose'
 import * as yup from 'yup'
+import { IMaterial } from './material'
+import './material'
 
 const product = yup.object({
 	name: yup.string().trim().required('Product name is required!'),
 	price: yup.number().required('Price is required!'),
-	materials: yup.array().of(
-		yup.string().trim().required()
-	).min(1).required(),
 	compostingDuration: yup.string().trim().required('Duration is required!'),
 	includes: yup.string().trim().required(),
 	color: yup.string().trim().required('Color is required!'),
@@ -15,12 +14,17 @@ const product = yup.object({
 	images: yup.array().of(yup.string().url().required()).min(1).required(),
 }).required()
 
-export type Product = yup.InferType<typeof product>
+export interface IProduct extends yup.InferType<typeof product> {
+	materials: ObjectId | IMaterial
+}
 
-const productSchema = new Schema<Product>({
+const productSchema = new Schema<IProduct>({
 	name: { type: String, required: true },
 	price: { type: Number, required: true },
-	materials: { type: [String], required: true },
+	materials: {
+		type: Schema.Types.ObjectId,
+		ref: 'Material',
+	},
 	compostingDuration: { type: String, required: true },
 	includes: { type: String, required: true },
 	color: { type: String, required: true },
@@ -29,4 +33,4 @@ const productSchema = new Schema<Product>({
 	images: { type: [String], required: true }
 })
 
-export default models?.Product as Model<Document & Product> || model<Product>('Product', productSchema, 'products')
+export default models?.Product as Model<Document & IProduct> || model<IProduct>('Product', productSchema, 'products')

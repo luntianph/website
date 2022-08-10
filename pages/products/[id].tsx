@@ -3,15 +3,16 @@ import Head from 'next/head'
 import Image from 'next/image'
 import useRetriever from '@lib/useRetriever'
 import { useRouter } from 'next/router'
-import { Product } from '@models/product'
 import Accordion from '@components/accordion'
 import { useState } from 'react'
 import LoadingSpinner from '@components/loading-spinner'
 import { ShoppingCartIcon } from '@heroicons/react/outline'
+import { APIProduct } from '@pages/api/products/[id]'
 
 const ProductPage: NextPage = () => {
 	const { query: { id } } = useRouter()
-	const { data: product, isLoading } = useRetriever<Product>(id ? `/api/products/${id}` : null)
+	const { data: product, isLoading }
+		= useRetriever<APIProduct>(id ? `/api/products/${id}` : null)
 	const [idx, setIdx] = useState(0)
 
 	if (isLoading || !product) {
@@ -61,9 +62,17 @@ const ProductPage: NextPage = () => {
 					</Accordion>
 				</div>
 				<div className="px-4 sm:px-0">
-					<h6 className="font-semibold">Materials:</h6>
-					<ul>
-						{product.materials.map((m, i) => <li key={i}><p className="before:content-['🌱_']">{m}</p></li>)}
+					<h6 className="font-semibold mb-2">Materials:</h6>
+					<ul className="space-y-8">
+						{product.materials.items.map((m, i) =>
+							<li key={i}><p className="before:content-['🌿_']">{m[0]}</p>
+								<ul>
+									{Array.isArray(m[1]) && m[1].map((item: string, j) =>
+										<li key={j}><p className="before:content-['—']">{item}</p></li>
+									)}
+								</ul>
+							</li>
+						)}
 					</ul>
 					<p className="mt-8">Composting duration: {product.compostingDuration}</p>
 				</div>
