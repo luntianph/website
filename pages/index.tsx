@@ -47,10 +47,9 @@ const Home: NextPage = () => {
 		const time = localStorage.getItem(dateKey)
 		if (time == null) {
 			localStorage.setItem(dateKey, new Date().getTime().toString())
-		} else {
-			if (new Date().getTime() - Number(time) > 604800) {
-				localStorage.removeItem(modalKey)
-			}
+		} else if (new Date().getTime() - Number(time) > 604800) {
+			localStorage.removeItem(modalKey)
+			localStorage.setItem(dateKey, new Date().getTime().toString())
 		}
 
 		// shows modal in 5 seconds
