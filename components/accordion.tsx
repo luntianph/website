@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode, useEffect, useState } from 'react'
 import { MinusCircleIcon, PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 
 type AccordionProps = {
@@ -9,7 +9,13 @@ type AccordionProps = {
 }
 
 const Accordion: FC<AccordionProps> = ({ summary, children, className, open }) => {
-	const [isOpen, setIsOpen] = useState(open ?? false)
+	const [isOpen, setIsOpen] = useState<boolean>()
+
+	// for some reason, initializing the state is not working, that's why useEffect is used.
+	useEffect(() => {
+		setIsOpen(open)
+	}, [open])
+
 
 	return (
 		<details className={className} open={open} onToggle={() => setIsOpen(!isOpen)}>

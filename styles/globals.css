@@ -89,6 +89,12 @@
 	details summary::-webkit-details-marker {
 		@apply hidden
 	}
+
+	.appearance-none::-webkit-inner-spin-button,
+	.appearance-none::-webkit-outer-spin-button {
+		-webkit-appearance: none; 
+  	margin: 0; 
+	}
 }
 
 @layer components {
@@ -101,7 +107,7 @@
 	}
 
 	.btn.green {
-		@apply bg-green-700 hover:bg-green-700 active:bg-green-700 text-white focus:ring-green-700;
+		@apply bg-green-700 hover:bg-green-800 active:bg-green-800 text-white focus:ring-green-700;
 	}
 
 	.footer-link {
