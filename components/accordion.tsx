@@ -1,5 +1,5 @@
-import { FC, ReactNode } from 'react'
-import { PlusIcon } from '@heroicons/react/outline'
+import { FC, ReactNode, useState } from 'react'
+import { MinusCircleIcon, PlusCircleIcon, PlusIcon } from '@heroicons/react/outline'
 
 type AccordionProps = {
 	summary: ReactNode
@@ -9,11 +9,13 @@ type AccordionProps = {
 }
 
 const Accordion: FC<AccordionProps> = ({ summary, children, className, open }) => {
+	const [isOpen, setIsOpen] = useState(open ?? false)
+
 	return (
-		<details className={className} open={open}>
+		<details className={className} open={open} onToggle={() => setIsOpen(!isOpen)}>
 			<summary className="cursor-pointer flex items-center justify-between text-gray-700 hover:text-gray-900">
 				{summary}
-				<PlusIcon className="w-4" />
+				{isOpen ? <MinusCircleIcon className="w-6" /> : <PlusCircleIcon className="w-6" />}
 			</summary>
 			<div className="mt-2">
 				{children}
