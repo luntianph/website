@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
 
@@ -73,7 +73,7 @@ const Header: FC = () => {
 										{open ? <XIcon className="block h-6 w-6" aria-hidden="true" /> : <MenuIcon className="block h-6 w-6" aria-hidden="true" />}
 									</Disclosure.Button>
 								</div>
-								<div className="flex-1 flex items-center h-full justify-center lg:items-stretch lg:justify-start">
+								<div className="flex items-center h-full justify-center lg:items-stretch lg:justify-start">
 									<Link href="/">
 										<a className="flex-shrink-0 -mb-1 flex items-center cursor-pointer font-basteleur text-green-700 text-2xl">
 											LUNTIAN
@@ -85,6 +85,13 @@ const Header: FC = () => {
 										</div>
 									</div>
 								</div>
+								<Link href="/cart">
+									<a>
+										<ShoppingCartIcon
+											className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"
+										/>
+									</a>
+								</Link>
 							</div>
 						</div>
 
@@ -96,7 +103,6 @@ const Header: FC = () => {
 							leaveFrom="transform scale-100 opacity-100"
 							leaveTo="transform scale-95 opacity-0"
 						>
-
 							<Disclosure.Panel className="lg:hidden relative bg-white">
 								<div className="px-2 pt-2 pb-3 space-y-1">
 									{navItems.map(nav => <MobNavItem key={nav.text} text={nav.text} path={nav.path} isHome={nav.isHome} onClick={close} />)}
