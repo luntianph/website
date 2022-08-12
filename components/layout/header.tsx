@@ -1,10 +1,11 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
+import db from '@lib/dexie'
 
 interface NavItemProp {
 	text: string
@@ -52,14 +53,20 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 
 	return (
 		<Link href={path} passHref>
-			<div className={className}>
+			<a className={className}>
 				<p className="px-3 py-2 font-medium" aria-current={path == pathname ? 'page' : undefined}>{text}</p>
-			</div>
+			</a>
 		</Link>
 	)
 }
 
 const Header: FC = () => {
+	const [count, setCount] = useState(0)
+
+	useEffect(() => {
+		db.cartItems.count().then(setCount)
+	}, [])
+
 	return (
 		<header className="h-16 lg:px-2 border-b bg-white border-gray-200 relative z-50">
 			<Disclosure as="nav" className="bg-white h-full">
@@ -86,10 +93,15 @@ const Header: FC = () => {
 									</div>
 								</div>
 								<Link href="/cart">
-									<a>
+									<a className="relative">
 										<ShoppingCartIcon
 											className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"
 										/>
+										{count &&
+											<div className="rounded-full absolute grid place-items-center bg-green-800 w-4 h-4 -top-1 -right-2">
+												<p className="bold text-white text-xs">{count}</p>
+											</div>
+										}
 									</a>
 								</Link>
 							</div>

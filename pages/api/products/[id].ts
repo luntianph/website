@@ -7,13 +7,30 @@ export type APIProduct = Omit<IProduct, 'materials'> & {
 	materials: Pick<IMaterial, 'items'>
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct>) => {
+export type LeanAPIProduct = Pick<IProduct, 'name' | 'price' | 'color'> & {
+	image: string
+}
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | LeanAPIProduct>) => {
 	const { query, method } = req
 
 	try {
 		switch (method) {
 			case 'GET': {
 				await dbConnect()
+
+				if (req.query.mode == 'lean') {
+					const product = await Products
+						.findById(query.id, 'name price color')
+						.select({ image: { $first: '$images' } })
+						.select('-images')
+						.lean()
+
+					console.log(product);
+
+					return res.json(product as unknown as LeanAPIProduct)
+				}
+
 				const product = await Products
 					.findById(query.id, '-_id -__v')
 					.populate({

@@ -4,16 +4,44 @@ import Image from 'next/image'
 import useRetriever from '@lib/useRetriever'
 import { useRouter } from 'next/router'
 import Accordion from '@components/accordion'
-import { useState } from 'react'
+import { FocusEventHandler, FormEventHandler, useCallback, useState } from 'react'
 import LoadingSpinner from '@components/loading-spinner'
 import { ShoppingCartIcon } from '@heroicons/react/outline'
 import { APIProduct } from '@pages/api/products/[id]'
+import db from '@lib/dexie'
+
+const validateQuantity: FocusEventHandler<HTMLInputElement> = (event) => {
+	const value = Number(event.target.value)
+	if (value < 1) {
+		event.target.value = "1"
+	}
+}
 
 const ProductPage: NextPage = () => {
 	const { query: { id } } = useRouter()
 	const { data: product, isLoading }
 		= useRetriever<APIProduct>(id ? `/api/products/${id}` : null)
 	const [idx, setIdx] = useState(0)
+
+	const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
+		e.preventDefault()
+		const quantity = Number(new FormData(e.target as HTMLFormElement).get('quantity')) | 0
+
+		if (typeof id != 'string') return
+
+		// attempt to find an existing entry and modify it
+		const count = await db.cartItems.where('id').equals(id).modify((entry) => {
+			entry.quantity += quantity
+		})
+
+		if (count == 0) {
+			await db.cartItems.add({
+				id,
+				quantity,
+			})
+		}
+
+	}, [id])
 
 	if (isLoading || !product) {
 		return (
@@ -24,7 +52,7 @@ const ProductPage: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>Luntian | Products</title>
+				<title>Luntian | Product</title>
 			</Head>
 			<div className="max-w-4xl grid sm:px-4 sm:grid-cols-[7fr_5fr] mx-auto sm:pt-10 mb-20 gap-6">
 				<div className="relative">
@@ -41,15 +69,22 @@ const ProductPage: NextPage = () => {
 					</div>
 				</div>
 				<div className="px-4 sm:px-0">
-					<h1 className="lg:text-3xl text-2xl font-basteleur text-green-500">{product.name}</h1>
-					<div className="flex justify-between items-center mt-4 mb-10">
+					<div className="mb-12">
+						<h1 className="lg:text-3xl text-2xl font-basteleur text-green-500">{product.name}</h1>
 						<h5 className="text-lg text-gray-700">₱{product.price.toFixed(2)}</h5>
-						<button className="rounded-md px-4 py-2 flex items-center bg-[#AE633F] hover:bg-[#915539] text-white font-semibold">
-							Shop Now
-							<ShoppingCartIcon className="w-5 ml-2" />
-						</button>
+						<form className="my-4" onSubmit={handleSubmit}>
+							<div className="flex items-center space-x-4 mb-2">
+								<p className="text-sm">Quantity</p>
+								<input type="number" name="quantity" className="appearance-none w-20 text-center" min={1} onBlur={validateQuantity} defaultValue={1} required />
+							</div>
+							<button type="submit"
+								className="rounded-md px-4 py-2 flex items-center bg-[#AE633F] hover:bg-[#915539] text-white font-semibold" >
+								Add to Cart
+								<ShoppingCartIcon className="w-5 ml-2" />
+							</button>
+						</form>
 					</div>
-					<Accordion summary="Product details" className="mb-2" open>
+					<Accordion summary="Product details" className="mb-2" open={true}>
 						<div className="transition-all">
 							<p className="font-semibold">Package includes: {product.includes}</p>
 							<p>Measurements: {product.measurements}</p>
