@@ -26,8 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 						.select('-images')
 						.lean()
 
-					console.log(product);
-
 					return res.json(product as unknown as LeanAPIProduct)
 				}
 

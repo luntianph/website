@@ -6,6 +6,7 @@ import { MenuIcon, XIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroicons/r
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
 import db from '@lib/dexie'
+import { useLiveQuery } from 'dexie-react-hooks'
 
 interface NavItemProp {
 	text: string
@@ -61,11 +62,10 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 }
 
 const Header: FC = () => {
-	const [count, setCount] = useState(0)
+	const [isMounted, setIsMounted] = useState(false)
+	const count = useLiveQuery(() => isMounted ? db.cartItems.count() : 0, [isMounted], 0)
 
-	useEffect(() => {
-		db.cartItems.count().then(setCount)
-	}, [])
+	useEffect(() => setIsMounted(true), [])
 
 	return (
 		<header className="h-16 lg:px-2 border-b bg-white border-gray-200 relative z-50">
@@ -97,7 +97,7 @@ const Header: FC = () => {
 										<ShoppingCartIcon
 											className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"
 										/>
-										{count &&
+										{count != 0 &&
 											<div className="rounded-full absolute grid place-items-center bg-green-800 w-4 h-4 -top-1 -right-2">
 												<p className="bold text-white text-xs">{count}</p>
 											</div>

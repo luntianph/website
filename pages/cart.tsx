@@ -10,6 +10,7 @@ import useSWRImmutable from 'swr/immutable'
 import { LeanAPIProduct } from './api/products/[id]'
 import { XIcon } from '@heroicons/react/outline'
 import LoadingSpinner from '@components/loading-spinner'
+import Link from 'next/link'
 
 const fetcher = ({ id }: CartItem) => app.get<LeanAPIProduct>(`/api/products/${id}?mode=lean`).then(res => res.data)
 
@@ -87,38 +88,43 @@ const Cart: NextPage = () => {
 					<form ref={ref}>
 						<h3 className="font-medium text-3xl">My Cart</h3>
 						<hr />
-						{isLoading ?
-							<LoadingSpinner />
-							:
-							cartItems?.map(({ id, quantity }) =>
-								<div key={id} className="flex p-2 space-x-4">
-									<div className="grid place-items-center">
-										<Image src={items.get(id)?.image || '/logo.png'} alt="shop item" width={100} height={100} />
-									</div>
-									<div className="grid grid-cols-2 flex-1">
-										<div>
-											<p className="font-bold leading-5 text-left">{items.get(id)?.name}</p>
-											<p className="font-semibold text-gray-500">₱{items.get(id)?.price.toFixed(2)}</p>
-											<p className="font-semibold text-gray-500">Color: {items.get(id)?.color}</p>
+						{cartItems.length == 0 ?
+							<div className="h-full flex justify-center items-center flex-col">
+								<h1 className="text-2xl font-medium opacity-50">No items yet.</h1>
+								<Link href="/products">
+									<a className="text-green-500 hover:underline hover:text-green-700">View our products here</a>
+								</Link>
+							</div> :
+							isLoading ? <LoadingSpinner /> :
+								cartItems?.map(({ id, quantity }) =>
+									<div key={id} className="flex p-2 space-x-4">
+										<div className="grid place-items-center">
+											<Image src={items.get(id)?.image || '/logo.png'} alt="shop item" width={100} height={100} />
 										</div>
-										<div className="flex flex-col items-end">
-											<DebouncedInput
-												type="number"
-												className="text-center w-24 appearance-none"
-												value={quantity}
-												onChange={(quantity) => handleQuantityChange(id, Number(quantity))}
-											/>
-											<p className="font-bold text-right">₱{((items.get(id)?.price ?? 0) * quantity).toFixed(2)}</p>
+										<div className="grid grid-cols-2 flex-1">
+											<div>
+												<p className="font-bold leading-5 text-left">{items.get(id)?.name}</p>
+												<p className="font-semibold text-gray-500">₱{items.get(id)?.price.toFixed(2)}</p>
+												<p className="font-semibold text-gray-500">Color: {items.get(id)?.color}</p>
+											</div>
+											<div className="flex flex-col items-end">
+												<DebouncedInput
+													type="number"
+													className="text-center w-24 appearance-none"
+													value={quantity}
+													onChange={(quantity) => handleQuantityChange(id, Number(quantity))}
+												/>
+												<p className="font-bold text-right">₱{((items.get(id)?.price ?? 0) * quantity).toFixed(2)}</p>
+											</div>
 										</div>
+										<XIcon className="w-4 h-4 cursor-pointer mt-4 hover:text-red-700" onClick={() => handleDelete(id)} />
 									</div>
-									<XIcon className="w-4 h-4 cursor-pointer mt-4 hover:text-red-700" onClick={() => handleDelete(id)} />
-								</div>
-							)}
+								)}
 					</form>
 					<div className="flex flex-col items-end">
 						<h3 className="text-3xl font-medium mb-2">Total:</h3>
 						<h3 className="text-4xl mb-1.5">₱{sum.toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</h3>
-						<button className="btn green px-4">Checkout</button>
+						<button className="btn green px-4" disabled={cartItems.length == 0}>Checkout</button>
 					</div>
 				</div>
 			</div >

@@ -110,6 +110,10 @@
 		@apply bg-green-700 hover:bg-green-800 active:bg-green-800 text-white focus:ring-green-700;
 	}
 
+	.btn:disabled {
+		@apply cursor-not-allowed bg-gray-400 hover:bg-gray-400
+	}
+
 	.footer-link {
 		@apply hover:text-green-700 transition-colors
 	}
