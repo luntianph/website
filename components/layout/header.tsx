@@ -80,7 +80,7 @@ const Header: FC = () => {
 										{open ? <XIcon className="block h-6 w-6" aria-hidden="true" /> : <MenuIcon className="block h-6 w-6" aria-hidden="true" />}
 									</Disclosure.Button>
 								</div>
-								<div className="flex items-center h-full justify-center lg:items-stretch lg:justify-start">
+								<div className="flex-1 flex items-center h-full justify-center lg:items-stretch lg:justify-start">
 									<Link href="/">
 										<a className="flex-shrink-0 -mb-1 flex items-center cursor-pointer font-basteleur text-green-700 text-2xl">
 											LUNTIAN
@@ -93,15 +93,17 @@ const Header: FC = () => {
 									</div>
 								</div>
 								<Link href="/cart">
-									<a className="relative">
-										<ShoppingCartIcon
-											className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"
-										/>
-										{count != 0 &&
-											<div className="rounded-full absolute grid place-items-center bg-green-800 w-4 h-4 -top-1 -right-2">
-												<p className="bold text-white text-xs">{count}</p>
-											</div>
-										}
+									<a className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
+										<div className="relative">
+											<ShoppingCartIcon
+												className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"
+											/>
+											{count != 0 &&
+												<div className="rounded-full absolute grid place-items-center bg-green-800 w-4 h-4 -top-1 -right-2">
+													<p className="bold text-white text-xs">{count}</p>
+												</div>
+											}
+										</div>
 									</a>
 								</Link>
 							</div>

@@ -1,4 +1,3 @@
-import DebouncedInput from '@components/debounced-input'
 import app from '@lib/axios-config'
 import db, { CartItem } from '@lib/dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
@@ -11,6 +10,7 @@ import { LeanAPIProduct } from './api/products/[id]'
 import { XIcon } from '@heroicons/react/outline'
 import LoadingSpinner from '@components/loading-spinner'
 import Link from 'next/link'
+import DebouncedNumbericInput from '@components/debounced-numeric-input'
 
 const fetcher = ({ id }: CartItem) => app.get<LeanAPIProduct>(`/api/products/${id}?mode=lean`).then(res => res.data)
 
@@ -108,11 +108,10 @@ const Cart: NextPage = () => {
 												<p className="font-semibold text-gray-500">Color: {items.get(id)?.color}</p>
 											</div>
 											<div className="flex flex-col items-end">
-												<DebouncedInput
-													type="number"
+												<DebouncedNumbericInput
 													className="text-center w-24 appearance-none"
 													value={quantity}
-													onChange={(quantity) => handleQuantityChange(id, Number(quantity))}
+													onChange={quantity => handleQuantityChange(id, quantity)}
 												/>
 												<p className="font-bold text-right">₱{((items.get(id)?.price ?? 0) * quantity).toFixed(2)}</p>
 											</div>
