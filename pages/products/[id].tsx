@@ -4,12 +4,13 @@ import Image from 'next/image'
 import useRetriever from '@lib/useRetriever'
 import { useRouter } from 'next/router'
 import Accordion from '@components/accordion'
-import { FormEventHandler, useState } from 'react'
+import { FormEventHandler, useEffect, useState } from 'react'
 import LoadingSpinner from '@components/loading-spinner'
 import { ShoppingCartIcon } from '@heroicons/react/outline'
 import { APIProduct } from '@pages/api/products/[id]'
 import db from '@lib/dexie'
 import DebouncedNumbericInput from '@components/debounced-numeric-input'
+import cn from 'classnames'
 
 const ProductPage: NextPage = () => {
 	const { query: { id } } = useRouter()
@@ -17,6 +18,14 @@ const ProductPage: NextPage = () => {
 		= useRetriever<APIProduct>(id ? `/api/products/${id}` : null)
 	const [idx, setIdx] = useState(0)
 	const [quantity, setQuantity] = useState(1)
+	const [hasAdded, setHasAdded] = useState(false)
+
+	useEffect(() => {
+		if (hasAdded) {
+			const timeout = setTimeout(() => setHasAdded(false), 2000)
+			return () => clearTimeout(timeout)
+		}
+	}, [hasAdded, setHasAdded])
 
 	const handleQuantityChange = (value: number) => setQuantity(value >= 1 ? value : 1)
 
@@ -35,12 +44,12 @@ const ProductPage: NextPage = () => {
 				quantity,
 			})
 		}
+
+		setHasAdded(true)
 	}
 
 	if (isLoading || !product) {
-		return (
-			<LoadingSpinner />
-		)
+		return <LoadingSpinner />
 	}
 
 	return (
@@ -72,10 +81,13 @@ const ProductPage: NextPage = () => {
 								<DebouncedNumbericInput className="w-24" value={quantity} min={1} onChange={handleQuantityChange} required />
 							</div>
 							<button type="submit"
-								className="rounded-md px-4 py-2 flex items-center bg-[#AE633F] hover:bg-[#915539] text-white font-semibold" >
-								Add to Cart
+								className="rounded-md px-4 py-2 flex items-center bg-[#AE633F] hover:bg-[#915539] text-white font-semibold">
+								Add to cart
 								<ShoppingCartIcon className="w-5 ml-2" />
 							</button>
+							<p className={cn('transition-opacity duration-1000 text-[#AE633F]', hasAdded ? 'opacity-100' : 'opacity-0')}>
+								Added to your cart!
+							</p>
 						</form>
 					</div>
 					<Accordion summary="Product details" className="mb-2" open={true}>
