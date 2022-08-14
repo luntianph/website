@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
 import db from '@lib/dexie'
@@ -62,10 +62,7 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 }
 
 const Header: FC = () => {
-	const [isMounted, setIsMounted] = useState(false)
-	const count = useLiveQuery(() => isMounted ? db.cartItems.count() : 0, [isMounted], 0)
-
-	useEffect(() => setIsMounted(true), [])
+	const count = useLiveQuery(() => typeof window === 'undefined' ? 0 : db.cartItems.count(), [], 0)
 
 	return (
 		<header className="h-16 lg:px-2 border-b bg-white border-gray-200 relative z-50">

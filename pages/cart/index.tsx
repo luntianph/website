@@ -6,13 +6,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
-import { LeanAPIProduct } from './api/products/[id]'
+import { LeanAPIProduct } from '../api/products/[id]'
 import { XIcon } from '@heroicons/react/outline'
 import LoadingSpinner from '@components/loading-spinner'
 import Link from 'next/link'
 import DebouncedNumbericInput from '@components/debounced-numeric-input'
 
-const fetcher = ({ id }: CartItem) => app.get<LeanAPIProduct>(`/api/products/${id}?mode=lean`).then(res => res.data)
+export const fetcher = ({ id }: CartItem) => app.get<LeanAPIProduct>(`/api/products/${id}?mode=lean`).then(res => res.data)
 
 function useCartItems(cartItems: CartItem[]) {
 	const { data, error, mutate, isValidating } = useSWRImmutable(cartItems.length ? 'cart' : null, () => Promise.all(cartItems.map(fetcher)))
@@ -64,14 +64,11 @@ async function handleQuantityChange(id: string, quantity: number) {
 
 const Cart: NextPage = () => {
 	const ref = useRef<HTMLFormElement>(null)
-	const [isMounted, setIsMounted] = useState(false)
-	const cartItems = useLiveQuery(() => isMounted ? db.cartItems.toArray() : [], [isMounted], [] as CartItem[])
-	const { data: items, isLoading, mutate } = useCartItems(cartItems)
+	const cartItems = useLiveQuery(() => typeof window == 'undefined' ? [] : db.cartItems.toArray(), [], [] as CartItem[])
+	const { data: items, isLoading } = useCartItems(cartItems)
 	const sum = useMemo(() => cartItems.reduce((sum, { id, quantity }) => {
 		return sum + (items.get(id)?.price ?? 0) * quantity
 	}, 0), [items, cartItems])
-
-	useEffect(() => { setIsMounted(true) }, [])
 
 	async function handleDelete(id: string) {
 		await db.cartItems.delete(id)
@@ -103,7 +100,9 @@ const Cart: NextPage = () => {
 										</div>
 										<div className="grid grid-cols-2 flex-1">
 											<div>
-												<p className="font-bold leading-5 text-left">{items.get(id)?.name}</p>
+												<Link href={`/products/${id}`}>
+													<p className="font-bold leading-5 text-left">{items.get(id)?.name}</p>
+												</Link>
 												<p className="font-semibold text-gray-500">₱{items.get(id)?.price.toFixed(2)}</p>
 												<p className="font-semibold text-gray-500">Color: {items.get(id)?.color}</p>
 											</div>
@@ -112,6 +111,7 @@ const Cart: NextPage = () => {
 													className="text-center w-24 appearance-none"
 													value={quantity}
 													onChange={quantity => handleQuantityChange(id, quantity)}
+													min={1}
 												/>
 												<p className="font-bold text-right">₱{((items.get(id)?.price ?? 0) * quantity).toFixed(2)}</p>
 											</div>
@@ -123,7 +123,9 @@ const Cart: NextPage = () => {
 					<div className="flex flex-col items-end">
 						<h3 className="text-3xl font-medium mb-2">Total:</h3>
 						<h3 className="text-4xl mb-1.5">₱{sum.toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</h3>
-						<button className="btn green px-4" disabled={cartItems.length == 0}>Checkout</button>
+						<Link href="/cart/checkout">
+							<button className="btn green px-4" disabled={cartItems.length == 0}>Checkout</button>
+						</Link>
 					</div>
 				</div>
 			</div >
