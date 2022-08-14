@@ -1,0 +1,30 @@
+.heading {
+	@apply text-3xl font-medium mb-4
+}
+
+.submit-btn {
+	@apply text-center w-full cursor-pointer focus:outline-none 
+	focus:ring-2 focus:ring-offset-2 py-1 bg-green-700 hover:bg-green-800
+	active:bg-green-800 text-white focus:ring-green-700
+}
+
+.error {
+	@apply text-red-700 min-h-[20px] text-sm
+}
+
+.delivery-option {
+	@apply flex items-center space-x-4 py-3 px-4 border border-gray-300
+		cursor-pointer
+}
+
+.delivery-option h5 {
+	@apply text-lg
+}
+
+.forms hr {
+	@apply my-8 border-gray-300
+}
+
+.payment-options li > p {
+	@apply first:before:content-['🌱_'] first:text-green-800 font-semibold
+}
