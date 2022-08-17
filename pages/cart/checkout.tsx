@@ -11,6 +11,9 @@ import LoadingSpinner from '@components/loading-spinner'
 import { useMemo } from 'react'
 import DeliveryMethods from '@components/forms/delivery-methods'
 import styles from '@styles/Checkout.module.css'
+import { Disclosure, Transition } from '@headlessui/react'
+import OrderConfirmation from '@components/forms/order-confirmation'
+import useCheckoutStore from '@stores/checkout'
 
 function useCartItems(cartItems: CartItem[]) {
 	const { data, error } = useSWRImmutable(cartItems.length ? 'cart' : null, () => Promise.all(cartItems.map(fetcher)))
@@ -22,13 +25,21 @@ function useCartItems(cartItems: CartItem[]) {
 	}
 }
 
-
 const CheckoutPage: NextPage = () => {
 	const cartItems = useLiveQuery(() => typeof window == 'undefined' ? [] : db.cartItems.toArray(), [], [] as CartItem[])
 	const { data: items, isLoading } = useCartItems(cartItems)
 	const sum = useMemo(() => cartItems.reduce((sum, { id, quantity }, i) => {
 		return sum + (items?.[i].price ?? 0) * quantity
 	}, 0), [items, cartItems])
+	const step = useCheckoutStore(state => state.step)
+	const edit = useCheckoutStore(state => state.edit)
+	const setEdit = useCheckoutStore(state => state.setEdit)
+
+	const STEPS = useMemo(() => [
+		{ title: 'Shipping Details', component: ShippingDetails },
+		{ title: 'Delivery Method', component: DeliveryMethods },
+		{ title: 'Review and Order Placement', component: OrderConfirmation },
+	], [])
 
 	return (
 		<div className="container mx-auto px-4 sm:px-0 mb-24 mt-10">
@@ -37,24 +48,40 @@ const CheckoutPage: NextPage = () => {
 			</Head>
 			<div className="grid grid-cols-[4fr_3fr] max-w-5xl mx-auto gap-x-8">
 				<div className={styles.forms}>
-					<h2 className={styles.heading}>1 Shipping Details</h2>
-					<ShippingDetails />
-					<hr />
-					<h2 className={styles.heading}>2 Delivery Method</h2>
-					<DeliveryMethods />
-					<hr />
-					<h2 className={styles.heading}>3 Review and Order Placement</h2>
-					<div>
-						<p>
-							Review the order details above, and place your order when you&apos;re ready.
-							A confirmation email will be sent to you upon submitting this order.
-						</p>
-						<div className="flex items-center space-x-2 my-2">
-							<input type="checkbox" id="tandc" />
-							<label htmlFor="tandc" className="text-base">I agree to the <span className="underline">Terms and Conditions</span></label>
-						</div>
-						<input type="submit" value="Place Order" className={styles['submit-btn'] + ' mt-1'} />
-					</div>
+					{STEPS.map(({ title, component }, i) => (
+						<>
+							<Disclosure key={title}>
+								{() => (
+									<>
+										<div className="flex justify-between items-center">
+											<h2 className={styles.heading}>{i + 1} {title}</h2>
+											{
+												i == edit ?
+													<button className="underline cursor-pointer" onClick={() => setEdit(-1)}>Close</button>
+													:
+													i < step &&
+													<button className="underline cursor-pointer" onClick={() => setEdit(i)}>Edit details</button>
+											}
+										</div>
+										<Transition
+											show={i <= step || i == edit}
+											enter="transition duration-100 ease-out"
+											enterFrom="transform scale-95 opacity-0"
+											enterTo="transform scale-100 opacity-100"
+											leave="transition duration-75 ease-out"
+											leaveFrom="transform scale-100 opacity-100"
+											leaveTo="transform scale-95 opacity-0"
+										>
+											<Disclosure.Panel static>
+												{component({ index: i })}
+											</Disclosure.Panel>
+										</Transition>
+									</>
+								)}
+							</Disclosure>
+							<hr />
+						</>
+					))}
 				</div>
 				<div>
 					<div className="bg-gray-200 px-6 py-4 sticky top-10">
@@ -87,7 +114,7 @@ const CheckoutPage: NextPage = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div >
 	)
 }
 
