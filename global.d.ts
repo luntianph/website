@@ -17,6 +17,9 @@ declare global {
 			GOOGLE_CLIENT_SECRET: string;
 			NEXT_PUBLIC_ADMIN_EMAIL: string;
 			MAIL_PASS: string
+			GSERVICE_EMAIL: string
+			GSERVICE_KEY: string
+			GSHEET_ID: string
 		}
 	}
 }
