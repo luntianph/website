@@ -16,6 +16,7 @@ const product = yup.object({
 
 export interface IProduct extends yup.InferType<typeof product> {
 	materials: ObjectId | IMaterial
+	column: number
 }
 
 const productSchema = new Schema<IProduct>({
@@ -30,7 +31,8 @@ const productSchema = new Schema<IProduct>({
 	color: { type: String, required: true },
 	companyConditions: { type: String, required: true },
 	measurements: { type: String, required: true },
-	images: { type: [String], required: true }
+	images: { type: [String], required: true },
+	column: { type: Number, required: true }
 })
 
 export default models?.Product as Model<Document & IProduct> || model<IProduct>('Product', productSchema, 'products')
