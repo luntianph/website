@@ -9,7 +9,7 @@
 }
 
 .error {
-	@apply text-red-700 min-h-[20px] text-sm
+	@apply text-red-700 min-h-[20px] text-sm text-left
 }
 
 .delivery-option {
@@ -23,8 +23,4 @@
 
 .forms hr {
 	@apply my-8 border-gray-300
-}
-
-.payment-options li > p {
-	@apply first:before:content-['🌱_'] first:text-green-800 font-semibold
 }

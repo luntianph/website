@@ -46,11 +46,11 @@ const CheckoutPage: NextPage = () => {
 			<Head>
 				<title>Luntian | Checkout</title>
 			</Head>
-			<div className="grid grid-cols-[4fr_3fr] max-w-5xl mx-auto gap-x-8">
+			<div className="grid md:grid-cols-[4fr_3fr] max-w-5xl mx-auto gap-x-8 gap-y-8">
 				<div className={styles.forms}>
 					{STEPS.map(({ title, component }, i) => (
-						<>
-							<Disclosure key={title}>
+						<div key={title} className="contents">
+							<Disclosure>
 								{() => (
 									<>
 										<div className="flex justify-between items-center">
@@ -80,10 +80,10 @@ const CheckoutPage: NextPage = () => {
 								)}
 							</Disclosure>
 							<hr />
-						</>
+						</div>
 					))}
 				</div>
-				<div>
+				<div className="-order-1 md:order-1">
 					<div className="bg-gray-200 px-6 py-4 sticky top-10">
 						<div className="flex justify-between items-center mb-4">
 							<h3 className="text-lg font-semibold">Order Summary</h3>
