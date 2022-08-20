@@ -44,14 +44,41 @@ export default function ShippingDetails({ index }: CheckoutFormProp) {
 					<p className={styles.error}>{errors.lastName?.message}</p>
 				</div>
 				<div>
+					<label htmlFor="ig">Instagram Account</label>
+					<input type="text" id="ig" {...register('igLink')} />
+					<p className={styles.error}>{errors.igLink?.message}</p>
+				</div>
+				<div>
 					<label htmlFor="contact" className="required">Contact Number</label>
 					<input type="number" id="contact" {...register('contactNumber')} className="appearance-none" placeholder="Ex: 09123456789" min={0} />
 					<p className={styles.error}>{errors.contactNumber?.message}</p>
 				</div>
 				<div>
-					<label htmlFor="last-name" className="required">Address</label>
-					<input type="text" id="last-name" {...register('address')} />
+					<label htmlFor="address" className="required">Full Address</label>
+					<input type="text" id="address" {...register('address')} />
 					<p className={styles.error}>{errors.address?.message}</p>
+				</div>
+				<div>
+					<label htmlFor="city" className="required">City</label>
+					<input type="text" id="city" {...register('city')} />
+					<p className={styles.error}>{errors.city?.message}</p>
+				</div>
+				<div>
+					<label htmlFor="region" className="required">Region</label>
+					<input type="text" id="region" {...register('region')} />
+					<p className={styles.error}>{errors.region?.message}</p>
+				</div>
+				<div className="grid grid-cols-2 gap-x-4">
+					<div>
+						<label htmlFor="zip" className="required">Zip Code</label>
+						<input type="number" id="zip" {...register('zip')} min={0} />
+						<p className={styles.error}>{errors.zip?.message}</p>
+					</div>
+					<div>
+						<label htmlFor="brgy" className="required">Barangay</label>
+						<input type="text" id="brgy" {...register('barangay')} />
+						<p className={styles.error}>{errors.barangay?.message}</p>
+					</div>
 				</div>
 				<input className={styles['submit-btn']} type="submit" value={index == step ? 'Continue' : 'Save'} />
 			</form>
@@ -64,8 +91,9 @@ export default function ShippingDetails({ index }: CheckoutFormProp) {
 			<div>
 				<p>Email: <span className="font-semibold">{details.email}</span></p>
 				<p>Name: <span className="font-semibold">{details.firstName} {details.lastName}</span></p>
+				{details.igLink && <p>Instagram: <span className="font-semibold">{details.igLink}</span></p>}
 				<p>Contact Number: <span className="font-semibold">{details.contactNumber}</span></p>
-				<p>Address: <span className="font-semibold">{details.address}</span></p>
+				<p>Full Address: <span className="font-semibold">{details.address}</span></p>
 			</div>
 		)
 	}
