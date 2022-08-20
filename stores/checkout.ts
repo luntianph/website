@@ -1,9 +1,7 @@
-import { IDeliveryMethod, IShippingDetails } from '@models/order'
+import { IDeliveryMethod, IShippingDetails, Order } from '@models/order'
 import create from 'zustand'
 
-export type CheckoutStore = {
-	details: IShippingDetails
-	delivery: IDeliveryMethod
+export type CheckoutStore = Order & {
 	step: number
 	edit: number
 	setDetails: (details: IShippingDetails) => void
@@ -20,8 +18,12 @@ const INITIAL = {
 		lastName: '',
 		address: '',
 		contactNumber: '',
+		city: '',
+		region: '',
+		zip: 1000,
+		barangay: '',
 		igLink: undefined,
-	},
+	} as IShippingDetails,
 	delivery: {
 		method: ''
 	},
