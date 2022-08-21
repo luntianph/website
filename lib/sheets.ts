@@ -16,20 +16,17 @@ jwtClient.authorize((err) => {
 const sheets = google.sheets('v4').spreadsheets.values
 
 export async function addOrder(order: OrderBody) {
-	const products = await Product.find({ _id: { $in: order.items.map(i => i.id) } }, 'column price').sort('column').lean()
 	const quantities: (number | undefined)[] = []
 	let curColIdx = 0, sum = 0
 
-	for (let i = 0; i < products.length; i++) {
-		for (; curColIdx < products[i].column; curColIdx++) {
+	order.items.forEach(item => {
+		for (; curColIdx < item.column; curColIdx++) {
 			quantities.push(undefined)
 		}
-
-		const q = order.items.find(t => t.id == products[i]._id)?.quantity
-		quantities.push(q)
-		sum += products[i].price * (q ?? 0)
+		quantities.push(item.quantity)
+		sum += item.price * item.quantity
 		curColIdx++
-	}
+	})
 
 	const values = [[
 		new Date(),

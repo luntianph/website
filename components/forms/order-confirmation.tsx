@@ -1,16 +1,37 @@
+import app from '@lib/axios-config'
+import db from '@lib/dexie'
+import { toastAxiosError } from '@lib/utils'
+import { Order } from '@models/order'
 import useCheckoutStore from '@stores/checkout'
 import styles from '@styles/Checkout.module.css'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { useRouter } from 'next/router'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+
+export const CHECKOUT_SUCCESS_STATE = 'checkout_success'
 
 const OrderConfirmation = () => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [showMessage, setShowMessage] = useState(false)
 	const resetStore = useCheckoutStore(state => state.reset)
+	const order: Order = useCheckoutStore(state => ({ details: state.details, delivery: state.delivery }))
+	const items = useLiveQuery(() => typeof window == 'undefined' ? [] : db.cartItems.toArray(), [], [])
+	const { replace } = useRouter()
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+	const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
 		e.preventDefault()
-		if (isChecked) return resetStore()
-		setShowMessage(true)
+		if (!isChecked) {
+			setShowMessage(true)
+		}
+
+		try {
+			await app.post('/api/orders', { ...order, items })
+			await db.cartItems.clear()
+			replace(`/?state=${CHECKOUT_SUCCESS_STATE}`)
+			resetStore()
+		} catch (err) {
+			toastAxiosError(err)
+		}
 	}
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target: { checked } }) => {
