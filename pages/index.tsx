@@ -14,6 +14,8 @@ import { XCircleIcon } from '@heroicons/react/solid'
 import { toastError, toastSuccess } from '@lib/toast-defaults'
 import app from '@lib/axios-config'
 import axios from 'axios'
+import { useRouter } from 'next/router'
+import { CHECKOUT_SUCCESS_STATE } from '@components/forms/order-confirmation'
 
 const formSchema = object({
 	email: string().email('Invalid email format!').required('Email is required!')
@@ -29,6 +31,7 @@ const Home: NextPage = () => {
 		resolver: yupResolver(formSchema)
 	})
 	const [isOpen, setIsOpen] = useState(false)
+	const { query } = useRouter()
 
 	async function onSubmit(data: FormSchema) {
 		try {
@@ -41,6 +44,12 @@ const Home: NextPage = () => {
 			}
 		}
 	}
+
+	useEffect(() => {
+		if (query.state == CHECKOUT_SUCCESS_STATE) {
+			toastSuccess('We have received your order. Payment instructions have been emailed to you.')
+		}
+	}, [query])
 
 	// shows modal only once in a week
 	useEffect(() => {
