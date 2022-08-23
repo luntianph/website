@@ -1,3 +1,5 @@
+import { FACEBOOK_URL, IG_URL, SHOPEE_URL, TIKTOK_URL } from '@lib/urls'
+
 const wrapInLayout = (body: string) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +16,7 @@ const wrapInLayout = (body: string) => `
 		th,td{padding:0.25rem 0.5rem}
 		img{width:100%;max-width:800px}
 		li p{margin:0}
+		p img{width:auto}
 	</style>
 </head>
 
@@ -26,8 +29,14 @@ const wrapInLayout = (body: string) => `
 		${body}
 		<p>
 			Regards,<br>
-			<strong>LUNTIAN Company PH</strong>
+			<strong>LUNTIAN Philippines</strong>
 		</p>
+		<div style="font-size:.9em">
+			<span>Facebook: <a href="${FACEBOOK_URL}">${FACEBOOK_URL}</a></span><br>
+			<span>Shopee: <a href="${SHOPEE_URL}">${SHOPEE_URL}</a></span><br>
+			<span>Instagram: <a href="${IG_URL}">${IG_URL}</a></span><br>
+			<span>Tiktok: <a href="${TIKTOK_URL}">${TIKTOK_URL}</a></span><br>
+		</div>
 	</main>
 	<footer>
 		<img alt="footer image" src="https://imgur.com/qVPAK8u.png">
