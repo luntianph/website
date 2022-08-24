@@ -135,18 +135,18 @@ const Home: NextPage = () => {
 						<Link href="/products">
 							<a className={styles['link-btn'] + ' group'}>
 								<span>Our Products</span>
-								<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+								<ChevronRightIcon className="w-4 aspect-square group-hover:translate-x-2 transition-transform" />
 							</a>
 						</Link>
 						<Link href="/cart">
 							<a className={styles['link-btn'] + ' group'}>
 								<span>Standard Checkout</span>
-								<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+								<ChevronRightIcon className="w-4 aspect-square group-hover:translate-x-2 transition-transform" />
 							</a>
 						</Link>
 						<a className={styles['link-btn'] + ' group'} href="https://shp.ee/f7viqkb">
 							<span>Shopee Checkout</span>
-							<ChevronRightIcon className="w-4 group-hover:translate-x-2 transition-transform" />
+							<ChevronRightIcon className="w-4 aspect-square group-hover:translate-x-2 transition-transform" />
 						</a>
 					</div>
 				</section>

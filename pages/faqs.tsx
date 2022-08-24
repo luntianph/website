@@ -42,7 +42,7 @@ const FAQs: NextPage = () => {
 					<p>Our mailers are not just eco-friendly, our high-quality packaging is stronger than it looks 💚.
 						The Kraft Paper of the mailer basically gets wet and absorbs liquid, but the bubble layer prevents
 						water and moisture from leaking towards the packaged items. It can practicaly protect your
-						stuff from a good amount of water as well. However, do keep in mind as the
+						stuff from a good amount of water as well. However, do keep in mind as the {' '}
 						<strong>mailers are not entirely waterproof</strong>. So we recommend using them as an internal
 						packaging and use them at your own risk and convenience 🌿
 					</p>

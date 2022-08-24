@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Head from 'next/head'
 import app from '@lib/axios-config'
 import { toastError, toastSuccess } from '@lib/toast-defaults'
+import Image from 'next/image'
 
 export const contactSchema = yup.object({
 	name: yup.string().trim().required('Name is required!'),
@@ -37,7 +38,10 @@ const ContactUs: NextPage = () => {
 			</Head>
 
 			<form className="max-w-xl grid gap-y-2 mx-auto" onSubmit={handleSubmit(onSubmit)}>
-				<h2 className="text-center font-basteleur text-green-700 text-3xl">Contact Us</h2>
+				<div className="grid place-items-center">
+					<Image src="/telephone-icon.png" alt="telephone icon" width={110} height={110} />
+					<h2 className="text-center font-basteleur text-green-700 text-3xl">Contact Us</h2>
+				</div>
 				<div>
 					<label className="required" htmlFor="name">Name</label>
 					<input type="text" id="name" {...register('name')} />
