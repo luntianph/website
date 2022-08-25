@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { LeanAPIProduct } from '../api/products/[id]'
-import { XIcon } from '@heroicons/react/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import LoadingSpinner from '@components/loading-spinner'
 import Link from 'next/link'
 import DebouncedNumbericInput from '@components/debounced-numeric-input'
@@ -116,7 +116,7 @@ const Cart: NextPage = () => {
 												<p className="font-bold text-right">₱{((items.get(id)?.price ?? 0) * quantity).toFixed(2)}</p>
 											</div>
 										</div>
-										<XIcon className="w-4 h-4 cursor-pointer mt-4 hover:text-red-700" onClick={() => handleDelete(id)} />
+										<XMarkIcon className="w-4 h-4 cursor-pointer mt-4 hover:text-red-700" onClick={() => handleDelete(id)} />
 									</div>
 								)}
 					</form>

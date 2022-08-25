@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from 'react'
-import { PlusIcon, MinusIcon } from '@heroicons/react/outline'
+import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline'
 
 type AccordionProps = {
 	summary: ReactNode

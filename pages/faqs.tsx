@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '@styles/FAQ.module.css'
 import { CONTACT_NUMBER, FACEBOOK_URL } from '@lib/urls'
-import { StarIcon } from '@heroicons/react/outline'
+import { StarIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 
 const FAQs: NextPage = () => {

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import cn from 'classnames'
 
 type CarouselProps = {
