@@ -2,11 +2,12 @@ import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ShoppingCartIcon, UserIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
 import db from '@lib/dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 interface NavItemProp {
 	text: string
@@ -63,6 +64,15 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 
 const Header: FC = () => {
 	const count = useLiveQuery(() => typeof window === 'undefined' ? 0 : db.cartItems.count(), [], 0)
+	const { data: session } = useSession()
+
+	function handleAuthClick() {
+		if (session) {
+			signOut({ callbackUrl: '/' })
+		} else {
+			signIn('google', { callbackUrl: '/products' })
+		}
+	}
 
 	return (
 		<header className="h-16 lg:px-2 border-b bg-white border-gray-200 relative z-50">
@@ -103,6 +113,14 @@ const Header: FC = () => {
 										</div>
 									</a>
 								</Link>
+								{
+									session ?
+										<ArrowLeftOnRectangleIcon onClick={handleAuthClick} name="Admin Logout"
+											className="w-6 aspect-square hover:text-green-700 active:text-green-800 select-none ml-4 cursor-pointer" />
+										:
+										<UserIcon onClick={handleAuthClick} name="Admin Login"
+											className="w-6 aspect-square hover:text-green-700 active:text-green-800 select-none ml-4 cursor-pointer" />
+								}
 							</div>
 						</div>
 
