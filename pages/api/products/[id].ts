@@ -48,14 +48,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 			}
 
 			case 'PUT': {
-				await dbConnect()
-				const data = await productSchema.validate(req.body)
+				const [data] = await Promise.all([
+					productSchema.validate(req.body),
+					dbConnect()
+				])
 				await Products.updateOne({ _id: query.id }, data)
-				Promise.all([
+				await Promise.all([
 					res.revalidate(`/products`),
 					res.revalidate(`/products/${query.id}`),
 					res.revalidate(`/products/${query.id}/edit`)
 				])
+				break
+			}
+
+			case 'DELETE': {
+				await dbConnect()
+				await Products.deleteOne({ _id: query.id })
+
+				try {
+					await Promise.all([
+						res.revalidate(`/products`),
+						res.revalidate(`/products/${query.id}`),
+						res.revalidate(`/products/${query.id}/edit`)
+					])
+				} catch (err) {
+					// expect an error due to missing data on get static props
+				}
 				break
 			}
 
