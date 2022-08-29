@@ -1,7 +1,7 @@
 import { useFieldArray, useForm } from 'react-hook-form'
 import { ProductSchema, productSchema } from '@models/product'
 import { yupResolver } from '@hookform/resolvers/yup'
-import useRetriever from '@lib/useRetriever'
+import { useRetriever } from '@lib/useRetriever'
 import { MaterialGetAPI } from '@pages/api/materials'
 import LoadingButton from '@components/loading-button'
 import { PlusIcon, XMarkIcon } from '@heroicons/react/20/solid'
@@ -13,7 +13,7 @@ type ProductFormProps = {
 } & Omit<React.HTMLAttributes<HTMLFormElement>, 'onSubmit'>
 
 const ProductForm = ({ product, onSubmit, isLoading, ...props }: ProductFormProps) => {
-	const { data: materials } = useRetriever<MaterialGetAPI>('/api/materials')
+	const { data: materials } = useRetriever<MaterialGetAPI>('/api/materials', [])
 	const { register, handleSubmit, formState: { errors }, control, reset } = useForm<ProductSchema>({
 		resolver: yupResolver(productSchema),
 		defaultValues: product,
