@@ -30,7 +30,7 @@ const ProductForm = ({ product, onSubmit, isLoading, ...props }: ProductFormProp
 				</div>
 				<div className="control">
 					<label className="required" htmlFor="price">Price</label>
-					<input type="number" id="price" {...register('price')} />
+					<input type="number" id="price" min={0} {...register('price')} />
 					<p className="form-err-msg text-sm">{errors.price?.message}</p>
 				</div>
 				<div className="control">

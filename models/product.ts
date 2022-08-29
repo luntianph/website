@@ -11,7 +11,7 @@ export const productSchema = yup.object({
 	color: yup.string().trim().required('Color is required!'),
 	companyConditions: yup.string().trim().required('Company conditions are required!'),
 	measurements: yup.string().trim().required('Measurements are required!').matches(/\d+cm x \d+cm/, 'This does not match the required pattern! <number>cm x <number>cm'),
-	images: yup.array().of(yup.string().url().required()).min(1).required(),
+	images: yup.array().of(yup.string().url().required()).min(1, 'At least 1 image is required!').required('At least 1 image is required!'),
 	column: yup.number().typeError('Column is required!').required('Column is required!').min(0),
 	materials: yup.string().matches(/^[a-f\d]{24}$/i, 'Invalid value!').required()
 })
