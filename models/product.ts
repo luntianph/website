@@ -3,23 +3,26 @@ import * as yup from 'yup'
 import { IMaterial } from './material'
 import './material'
 
-const product = yup.object({
+export const productSchema = yup.object({
 	name: yup.string().trim().required('Product name is required!'),
-	price: yup.number().required('Price is required!'),
+	price: yup.number().typeError('Price is required!').required('Price is required!'),
 	compostingDuration: yup.string().trim().required('Duration is required!'),
 	includes: yup.string().trim().required(),
 	color: yup.string().trim().required('Color is required!'),
 	companyConditions: yup.string().trim().required('Company conditions are required!'),
-	measurements: yup.string().trim().required().matches(/\d+cm x \d+cm/, 'This does not match the required patter! <number>cm x <number>cm'),
+	measurements: yup.string().trim().required('Measurements are required!').matches(/\d+cm x \d+cm/, 'This does not match the required pattern! <number>cm x <number>cm'),
 	images: yup.array().of(yup.string().url().required()).min(1).required(),
-}).required()
+	column: yup.number().typeError('Column is required!').required('Column is required!').min(0),
+	materials: yup.string().matches(/^[a-f\d]{24}$/i, 'Invalid value!').required()
+})
 
-export interface IProduct extends yup.InferType<typeof product> {
+export type ProductSchema = yup.InferType<typeof productSchema>
+
+export interface IProduct extends Omit<ProductSchema, 'materials'> {
 	materials: ObjectId | IMaterial
-	column: number
 }
 
-const productSchema = new Schema<IProduct>({
+const schema = new Schema<IProduct>({
 	name: { type: String, required: true },
 	price: { type: Number, required: true },
 	materials: {
@@ -33,6 +36,6 @@ const productSchema = new Schema<IProduct>({
 	measurements: { type: String, required: true },
 	images: { type: [String], required: true },
 	column: { type: Number, required: true }
-})
+}, { versionKey: false })
 
-export default models?.Product as Model<Document & IProduct> || model<IProduct>('Product', productSchema, 'products')
+export default models?.Product as Model<Document & IProduct> || model<IProduct>('Product', schema, 'products')
