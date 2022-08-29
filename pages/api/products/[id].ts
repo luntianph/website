@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import Products, { IProduct } from '@models/product'
 import dbConnect from '@lib/db'
 import { IMaterial } from '@models/material'
+import { ObjectId } from 'mongoose'
 
 export type APIProduct = Omit<IProduct, 'materials'> & {
 	materials: Pick<IMaterial, 'items'>
@@ -9,6 +10,19 @@ export type APIProduct = Omit<IProduct, 'materials'> & {
 
 export type LeanAPIProduct = Pick<IProduct, 'name' | 'price' | 'color'> & {
 	image: string
+}
+
+export async function getProduct(id: ObjectId | string) {
+	await dbConnect()
+
+	const product = await Products
+		.findById(id, '-_id -__v')
+		.populate({
+			path: 'materials',
+			select: '-_id items'
+		}).lean()
+
+	return product as APIProduct
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | LeanAPIProduct>) => {
@@ -29,14 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 					return res.json(product as unknown as LeanAPIProduct)
 				}
 
-				const product = await Products
-					.findById(query.id, '-_id -__v')
-					.populate({
-						path: 'materials',
-						select: '-_id items'
-					}).lean()
-
-				res.json(product as APIProduct)
+				res.json(await getProduct(query.id as string))
 				break
 			}
 
