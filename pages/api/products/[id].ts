@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import Products, { IProduct } from '@models/product'
+import Products, { IProduct, productSchema } from '@models/product'
 import dbConnect from '@lib/db'
 import { IMaterial } from '@models/material'
 import { ObjectId } from 'mongoose'
@@ -45,6 +45,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 
 				res.json(await getProduct(query.id as string))
 				break
+			}
+
+			case 'PUT': {
+				await dbConnect()
+				const data = await productSchema.validate(req.body)
+				await Products.updateOne({ _id: query.id }, data)
+				Promise.all([
+					res.revalidate(`/products`),
+					res.revalidate(`/products/${query.id}`),
+					res.revalidate(`/products/${query.id}/edit`)
+				])
 			}
 
 			default:
