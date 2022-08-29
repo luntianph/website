@@ -31,7 +31,7 @@ const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ produc
 	}
 
 	return (
-		<div className="max-w-2xl mx-auto w-full">
+		<div className="max-w-2xl mx-auto w-full px-4 md:px-0">
 			<h2 className="text-3xl font-normal mt-8 mb-6 max-w">Edit Product</h2>
 			<ProductForm onSubmit={onSubmit} product={product} className="w-full mb-20" isLoading={isLoading} />
 		</div>

@@ -30,10 +30,15 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 				<title>Luntian | Products</title>
 			</Head>
 			{status == 'authenticated' &&
-				<div className="col-span-full justify-self-end">
+				<div className="col-span-full justify-self-end space-x-2">
 					<Link href="/products/add">
-						<a className="btn green px-4 rounded-sm">
+						<a className="btn green px-3 py-2 rounded-sm">
 							Add Products
+						</a>
+					</Link>
+					<Link href="/materials">
+						<a className="btn green px-3 py-2 rounded-sm">
+							Edit Materials
 						</a>
 					</Link>
 				</div>
@@ -42,10 +47,12 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 				<Link key={p._id} href={`/products/${p._id}`}>
 					<a className="cursor-pointer">
 						<div className="relative aspect-square w-full">
-							<div className="p-1 bg-gray-700 bg-opacity-80 absolute right-2 top-2 z-10 hover:bg-gray-800"
-								onClick={e => { e.preventDefault(); handleDelete(p._id) }}>
-								<TrashIcon className="aspect-square w-5 text-white" />
-							</div>
+							{status == 'authenticated' &&
+								<div className="p-1 bg-gray-700 bg-opacity-80 absolute right-2 top-2 z-10 hover:bg-gray-800"
+									onClick={e => { e.preventDefault(); handleDelete(p._id) }}>
+									<TrashIcon className="aspect-square w-5 text-white" />
+								</div>
+							}
 							<Image src={p.images[0]} alt="An image" layout="fill" />
 						</div>
 						<h3 className="text-[#79834c] font-bold">{p.name}</h3>
