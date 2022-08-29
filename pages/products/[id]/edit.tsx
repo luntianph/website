@@ -1,16 +1,17 @@
 import ProductForm from '@components/forms/product-form'
+import LoadingSpinner from '@components/loading-spinner'
 import app from '@lib/axios-config'
 import dbConnect from '@lib/db'
 import { getProductIds } from '@lib/products'
 import { toastSuccess } from '@lib/toast-defaults'
 import { toastAxiosError } from '@lib/utils'
-import Product, { IProduct, ProductSchema } from '@models/product'
+import Product, { ProductSchema } from '@models/product'
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ product }) => {
-	const { query: { id }, push } = useRouter()
+	const { query: { id }, push, isFallback } = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data: ProductSchema) {
@@ -23,6 +24,10 @@ const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ produc
 			toastAxiosError(err)
 		}
 		setIsLoading(false)
+	}
+
+	if (isFallback) {
+		return <LoadingSpinner />
 	}
 
 	return (
@@ -40,18 +45,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false
+		fallback: true
 	}
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
 	await dbConnect()
 	const product = (await Product.findById(params?.id, '-_id -__v').lean()) as ProductSchema
-	product.materials = product?.materials.toString()
+
+	if (product) {
+		product.materials = product.materials.toString()
+	}
 
 	return {
 		props: {
 			product,
-		}
+		},
+		notFound: !product
 	}
 }

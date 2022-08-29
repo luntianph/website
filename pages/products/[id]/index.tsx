@@ -12,9 +12,10 @@ import cn from 'classnames'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { getProductIds } from '@lib/products'
+import LoadingSpinner from '@components/loading-spinner'
 
 const ProductPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ product }) => {
-	const { query: { id } } = useRouter()
+	const { query: { id }, isFallback, replace } = useRouter()
 	const { data: sessionData } = useSession()
 	const [idx, setIdx] = useState(0)
 	const [quantity, setQuantity] = useState(1)
@@ -46,6 +47,13 @@ const ProductPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 		}
 
 		setHasAdded(true)
+	}
+
+	if (isFallback) {
+		return <LoadingSpinner />
+	} else if (!product) {
+		replace('/404')
+		return <LoadingSpinner />
 	}
 
 	return (
@@ -130,14 +138,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false
+		fallback: true
 	}
 }
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+	const product = await getProduct(params?.id as string)
+
 	return {
 		props: {
-			product: await getProduct(params?.id as string),
-		}
+			product
+		},
+		notFound: !product,
 	}
 }
