@@ -2,21 +2,33 @@ import ProductForm from '@components/forms/product-form'
 import app from '@lib/axios-config'
 import dbConnect from '@lib/db'
 import { getProductIds } from '@lib/products'
+import { toastSuccess } from '@lib/toast-defaults'
+import { toastAxiosError } from '@lib/utils'
 import Product, { IProduct, ProductSchema } from '@models/product'
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ product }) => {
-	const { query: { id } } = useRouter()
+	const { query: { id }, push } = useRouter()
+	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data: ProductSchema) {
-		await app.put(`/api/products/${id}`, data)
+		setIsLoading(true)
+		try {
+			await app.put(`/api/products/${id}`, data)
+			push('/products')
+			toastSuccess('Product was successfully updated!')
+		} catch (err) {
+			toastAxiosError(err)
+		}
+		setIsLoading(false)
 	}
 
 	return (
 		<div className="max-w-2xl mx-auto w-full">
 			<h2 className="text-3xl font-normal mt-8 mb-6 max-w">Edit Product</h2>
-			<ProductForm onSubmit={onSubmit} product={product} className="w-full mb-20" />
+			<ProductForm onSubmit={onSubmit} product={product} className="w-full mb-20" isLoading={isLoading} />
 		</div>
 	)
 }

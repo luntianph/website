@@ -56,10 +56,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 					res.revalidate(`/products/${query.id}`),
 					res.revalidate(`/products/${query.id}/edit`)
 				])
+				break
 			}
 
 			default:
-				res.setHeader('Allow', ['GET'])
+				res.setHeader('Allow', ['GET', 'PUT'])
 				res.status(405).end(`Method ${method} Not Allowed`)
 		}
 	} catch (err) {

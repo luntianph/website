@@ -62,12 +62,14 @@
 	[type="password"],
 	[type="email"],
 	[type="date"], 
-	textarea {
+	textarea,
+	select {
 		@apply mt-1 focus:ring-green-100 focus:border-green-100 w-full sm:text-sm border-gray-300 block
+			disabled:text-gray-500 disabled:cursor-not-allowed disabled:bg-gray-200
 	}
 
 	label {
-		@apply block text-sm font-medium text-gray-700
+		@apply block text-sm font-medium text-gray-700 select-none
 	}
 
 	label.required {
@@ -103,11 +105,15 @@
 	}
 
 	.btn {
-		@apply cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 py-1;
+		@apply cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 py-1
 	}
 
 	.btn.green {
-		@apply bg-green-700 hover:bg-green-800 active:bg-green-800 text-white focus:ring-green-700;
+		@apply bg-green-700 hover:bg-green-800 active:bg-green-800 text-white focus:ring-green-700
+	}
+
+	.btn.white {
+		@apply bg-white hover:bg-gray-50 active:bg-gray-100 text-gray-700 focus:ring-gray-400
 	}
 
 	.btn:disabled {
