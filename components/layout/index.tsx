@@ -1,16 +1,33 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
 import Header from './header'
-import { useSession } from 'next-auth/react'
 import URLs from '@lib/urls'
 import Image from 'next/image'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
+import { useRouter } from 'next/router'
 
 export const siteTitle = 'Luntian'
 
+const variants: Variants = {
+	out: {
+		opacity: 0,
+		y: 40,
+		transition: {
+			duration: 0.75
+		}
+	},
+	in: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			duration: 0.75,
+			delay: 0.5
+		}
+	}
+}
+
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-	const { data: session } = useSession()
-	const { pathname } = useRouter()
+	const { asPath } = useRouter()
 
 	return (
 		<>
@@ -32,9 +49,16 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 				<meta name="twitter:card" content="summary_large_image" />
 			</Head>
 			<Header />
-			<main className="h-main grid">
-				{children}
-			</main>
+			<AnimatePresence
+				initial={false}
+				mode="wait"
+			>
+				<motion.div key={asPath} variants={variants} animate="in" initial="out" exit="out">
+					<main className="h-main grid">
+						{children}
+					</main>
+				</motion.div>
+			</AnimatePresence>
 			<footer className="bg-[#E6dECA] px-4 md:px-8 py-8">
 				<div className="grid place-items-center min-h-full mx-auto container">
 					<p className="text-2xl sm:text-4xl text-center font-basteleur font-extrabold text-[#61966A] mb-1">Lunas ang Tinig ng Animo</p>
