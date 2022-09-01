@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			}
 
 			case 'DELETE': {
-				const count = await Product.find({ material: query.id }, '_id').countDocuments()
+				const count = await Product.find({ materials: query.id }, '_id').countDocuments()
 
 				if (count) {
 					res.statusMessage = `${count} products still use this material.`
