@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 import { SessionProvider } from 'next-auth/react'
 import { ToastContainer } from 'react-toastify'
 import { useEffect, useState } from 'react'
+import { usePageTransitionFix } from '@lib/use-page-transition-fix'
 
 function MyApp({
 	Component,
@@ -14,6 +15,7 @@ function MyApp({
 	useEffect(() => {
 		setIsLoading(false)
 	}, [setIsLoading])
+	usePageTransitionFix()
 
 	if (isLoading) {
 		return (
