@@ -11,7 +11,9 @@ export function matchPath(pathname: string, route: string, isHome?: boolean) {
  * @param error - an error object of unknown type
  */
 export function toastAxiosError(error: unknown) {
+	console.log(error);
+
 	if (axios.isAxiosError(error)) {
-		toast.error(error.message, toastErrorConfig)
+		toast.error(error.response?.statusText || error.message, toastErrorConfig)
 	}
 }
