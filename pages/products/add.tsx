@@ -15,12 +15,12 @@ const Page: NextPage = () => {
 		setIsLoading(true)
 		try {
 			await app.post(`/api/products`, data)
-			push('/products')
 			toastSuccess('Product was successfully added!')
+			setTimeout(() => push('/products'), 1000)
 		} catch (err) {
 			toastAxiosError(err)
+			setIsLoading(false)
 		}
-		setIsLoading(false)
 	}
 
 	return (

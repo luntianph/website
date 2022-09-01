@@ -120,13 +120,12 @@
 		@apply bg-red-700 hover:bg-brown-700 text-white
 	}
 
-
 	.btn.gray {
 		@apply bg-gray-200 hover:bg-gray-300 active:bg-gray-400 focus:ring-gray-400
 	}
 
 	.btn:disabled {
-		@apply cursor-not-allowed bg-gray-400 hover:bg-gray-400
+		@apply cursor-not-allowed bg-gray-400 hover:bg-gray-400 text-white
 	}
 
 	.footer-link {
