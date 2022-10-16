@@ -6,6 +6,10 @@ const nextConfig = {
   swcMinify: true,
 	images: {
 		domains: ['drive.google.com']
+	},
+	i18n: {
+		locales: ['en'],
+		defaultLocale: 'en',
 	}
 }
 

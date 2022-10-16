@@ -1,7 +1,7 @@
 import dbConnect from '@lib/db'
 import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import Link from 'next/link'
 import Products from '@models/product'
 import { useSession } from 'next-auth/react'
@@ -62,7 +62,7 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 										<TrashIcon className="aspect-square w-5 text-white" />
 									</div>
 								}
-								<Image src={p.images[0]} alt="An image" layout="fill" />
+								<Image src={p.images[0]} alt="An image" fill />
 							</div>
 							<h3 className="text-[#79834c] font-bold">{p.name}</h3>
 							<p className="text-sm text-gray-600">₱{p.price.toFixed(2)}</p>

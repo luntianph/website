@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { useRouter } from 'next/router'
 import Accordion from '@components/accordion'
 import { FormEventHandler, useEffect, useState } from 'react'
@@ -69,14 +69,14 @@ const ProductPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 				</div>
 			}
 			<div className="relative">
-				<Image src={product.images[idx]} alt={product.name} layout="responsive" width={100} height={100} />
+				<Image src={product.images[idx]} alt={product.name} className="w-full" width={490} height={490} />
 				<div className="flex !space-x-1 mt-2 bg-gray-200">
 					{product.images.map((i, idx) => (
 						<div key={i} onClick={() => setIdx(idx)} tabIndex={0}
 							className="relative cursor-pointer outline outline-2 outline-transparent focus:outline-green-700 
 								hover:outline-green-400 w-20 aspect-square"
 						>
-							<Image src={i} alt={`${product.name}-${idx}`} layout="fill" />
+							<Image src={i} alt={`${product.name}-${idx}`} fill />
 						</div>
 					))}
 				</div>

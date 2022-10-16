@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import cn from 'classnames'
@@ -40,7 +40,7 @@ const Carousel: FC<CarouselProps> = ({ images }) => {
 					<div key={img.url} className={cn('w-full absolute transition-opacity duration-500',
 						{ 'opacity-100': i == idx, 'opacity-0': i != idx }
 					)}>
-						<Image src={img.url} width={img.width} height={img.height} objectPosition="contain" alt={img.alt} />
+						<Image src={img.url} width={img.width} height={img.height} className="bg-contain" alt={img.alt} />
 					</div>
 				))}
 			</div>

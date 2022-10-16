@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Head from 'next/head'
 import app from '@lib/axios-config'
 import { toastError, toastSuccess } from '@lib/toast-defaults'
-import Image from 'next/image'
+import Image from 'next/future/image'
 
 export const contactSchema = yup.object({
 	name: yup.string().trim().required('Name is required!'),

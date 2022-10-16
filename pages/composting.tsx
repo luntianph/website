@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import styles from '@styles/Composting.module.css'
 import Head from 'next/head'
 
@@ -18,11 +18,11 @@ const Care: NextPage = () => {
 			</div>
 			<div className={styles.composting}>
 				<div>
-					<Image src="/compost/1.png" alt="Empty pot" layout="fill" />
+					<Image src="/compost/1.png" alt="Empty pot" fill />
 				</div>
 				<h3>Step 1: Prepare a big container or bin that you can use for your compost</h3>
 				<div>
-					<Image src="/compost/2.png" alt="Biodegradeable materials" layout="fill" />
+					<Image src="/compost/2.png" alt="Biodegradeable materials" fill />
 				</div>
 				<div className="relative">
 					<h3>Step 2: Compile the compost materials that you will need.
@@ -38,7 +38,7 @@ const Care: NextPage = () => {
 					</div>
 				</div>
 				<div>
-					<Image src="/compost/4.png" alt="Filled pot" layout="fill" />
+					<Image src="/compost/4.png" alt="Filled pot" fill />
 				</div>
 				<h3>
 					Step 3: Cover the opening of the container or bin with a used plastic to trap the heat and
@@ -49,7 +49,7 @@ const Care: NextPage = () => {
 				</div>
 				<h3>Step 4: Check its progress every week and let nature do its thing </h3>
 				<div>
-					<Image src="/compost/6.png" alt="Fertilizer" layout="fill" />
+					<Image src="/compost/6.png" alt="Fertilizer" fill />
 				</div>
 				<h3>Step 5: Once it has fully degraded, you may now use it for fertilizer for your plants</h3>
 				<div className="col-span-full max-w-md justify-self-center">

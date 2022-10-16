@@ -6,11 +6,14 @@ import { SessionProvider } from 'next-auth/react'
 import { ToastContainer } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { usePageTransitionFix } from '@lib/use-page-transition-fix'
+import { Session } from 'next-auth'
 
 function MyApp({
 	Component,
 	pageProps: { session, ...pageProps }
-}: AppProps) {
+}: AppProps<{
+	session: Session
+}>) {
 	const [isLoading, setIsLoading] = useState(true)
 	useEffect(() => {
 		setIsLoading(false)

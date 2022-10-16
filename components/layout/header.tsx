@@ -2,12 +2,12 @@ import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Disclosure, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon, ShoppingCartIcon, UserIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ShoppingCartIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import cn from 'classnames'
 import { matchPath } from '@lib/utils'
 import db from '@lib/dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 interface NavItemProp {
 	text: string
@@ -98,7 +98,9 @@ const Header: FC = () => {
 									</div>
 								</div>
 								<Link href="/cart">
-									<a className="absolute inset-y-0 right-6 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
+									<a className="absolute inset-y-0 right-6 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0"
+										aria-label="View My Cart"
+									>
 										<div className="relative">
 											<ShoppingCartIcon
 												className="w-6 aspect-square cursor-pointer hover:text-green-700 active:text-green-800 select-none"

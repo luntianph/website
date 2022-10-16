@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 import Header from './header'
 import URLs from '@lib/urls'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { useRouter } from 'next/router'
 
