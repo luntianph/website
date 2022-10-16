@@ -69,8 +69,6 @@ const Header: FC = () => {
 	function handleAuthClick() {
 		if (session) {
 			signOut({ callbackUrl: '/' })
-		} else {
-			signIn('google', { callbackUrl: '/products' })
 		}
 	}
 
@@ -114,12 +112,9 @@ const Header: FC = () => {
 									</a>
 								</Link>
 								{
-									session ?
-										<ArrowLeftOnRectangleIcon onClick={handleAuthClick} name="Admin Logout"
-											className="w-6 absolute md:static md:inset-auto aspect-square right-0 hover:text-green-700 active:text-green-800 select-none ml-4 cursor-pointer" />
-										:
-										<UserIcon onClick={handleAuthClick} name="Admin Login"
-											className="w-6 absolute md:static md:inset-auto aspect-square right-0 hover:text-green-700 active:text-green-800 select-none ml-4 cursor-pointer" />
+									session &&
+									<ArrowLeftOnRectangleIcon onClick={handleAuthClick} name="Admin Logout"
+										className="w-6 absolute md:static md:inset-auto aspect-square right-0 hover:text-green-700 active:text-green-800 select-none ml-4 cursor-pointer" />
 								}
 							</div>
 						</div>
