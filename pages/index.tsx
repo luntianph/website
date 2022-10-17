@@ -54,6 +54,10 @@ const Home: NextPage = () => {
 		if (query.state == CHECKOUT_SUCCESS_STATE) {
 			toastSuccess('We have received your order. Payment instructions have been emailed to you.')
 		}
+
+		if (typeof query.error == 'string') {
+			toastError(query.error)
+		}
 	}, [query])
 
 	// shows modal only once in a week
