@@ -3,10 +3,10 @@ import { GetStaticPropsContext, InferGetStaticPropsType, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/future/image'
 import Link from 'next/link'
-import Products from '@models/product'
+import Products, { IProduct } from '@models/product'
 import { useSession } from 'next-auth/react'
-import { TrashIcon } from '@heroicons/react/24/outline'
-import { useCallback, useState } from 'react'
+import { TrashIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
 import app from '@lib/axios-config'
 import { useRouter } from 'next/router'
 import { toastAxiosError } from '@lib/utils'
@@ -20,6 +20,15 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 	async function handleDelete() {
 		try {
 			await app.delete(`/api/products/${selection}`)
+			reload()
+		} catch (err) {
+			toastAxiosError(err)
+		}
+	}
+
+	async function toggleProductVisibility(id: string, visible: boolean) {
+		try {
+			await app.patch(`/api/products/${id}`, { visible: !visible })
 			reload()
 		} catch (err) {
 			toastAxiosError(err)
@@ -52,22 +61,35 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 						</Link>
 					</div>
 				}
-				{products.map(p =>
-					<Link key={p._id} href={`/products/${p._id}`}>
-						<a className="cursor-pointer">
-							<div className="relative aspect-square w-full">
-								{status == 'authenticated' &&
-									<div className="p-1 bg-gray-700 bg-opacity-80 absolute right-2 top-2 z-10 hover:bg-gray-800"
-										onClick={e => { e.preventDefault(); setSelection(p._id) }}>
-										<TrashIcon className="aspect-square w-5 text-white" />
+				{products.map(p => {
+					if (p.visible || status == 'authenticated') {
+						return (
+							<Link key={p._id} href={`/products/${p._id}`}>
+								<a className="cursor-pointer">
+									<div className="relative aspect-square w-full">
+										{status == 'authenticated' &&
+											<div className="absolute right-2 top-2 z-10 flex space-x-2 text-white">
+												<div className="p-1 bg-gray-700 bg-opacity-80 hover:bg-gray-800"
+													onClick={e => { e.preventDefault(); toggleProductVisibility(p._id, p.visible) }}>
+													{p.visible ? <EyeIcon className="aspect-sqare w-5" /> : <EyeSlashIcon className="aspect-square w-5" />}
+												</div>
+												<div className="p-1 bg-gray-700 bg-opacity-80 hover:bg-gray-800"
+													onClick={e => { e.preventDefault(); setSelection(p._id) }}>
+													<TrashIcon className="aspect-square w-5" />
+												</div>
+											</div>
+										}
+										<Image src={p.images[0]} alt="An image" fill className={p.visible ? '' : 'opacity-60'} />
 									</div>
-								}
-								<Image src={p.images[0]} alt="An image" fill />
-							</div>
-							<h3 className="text-[#79834c] font-bold">{p.name}</h3>
-							<p className="text-sm text-gray-600">₱{p.price.toFixed(2)}</p>
-						</a>
-					</Link>
+									<h3 className="text-[#79834c] font-bold">{p.name}</h3>
+									<p className="text-sm text-gray-600">₱{p.price.toFixed(2)}</p>
+								</a>
+							</Link>
+						)
+					}
+
+					return []
+				}
 				)
 				}
 			</div >
@@ -75,14 +97,18 @@ const ProductsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
 	)
 }
 
+type Product = {
+	_id: string
+} & Pick<IProduct, 'name' | 'price' | 'images' | 'visible'>
+
 export const getStaticProps = async ({ }: GetStaticPropsContext) => {
 	await dbConnect()
-	const products = await Products.find({}, 'name price images').lean()
+	const products = await Products.find({}, 'name price images visible').lean()
 	products.forEach(p => p._id = p._id.toString())
 
 	return {
 		props: {
-			products
+			products: products as Product[]
 		}
 	}
 }

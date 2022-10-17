@@ -20,6 +20,7 @@ export type ProductSchema = yup.InferType<typeof productSchema>
 
 export interface IProduct extends Omit<ProductSchema, 'materials'> {
 	materials: ObjectId | IMaterial
+	visible: boolean
 }
 
 const schema = new Schema<IProduct>({
@@ -35,7 +36,8 @@ const schema = new Schema<IProduct>({
 	companyConditions: { type: String, required: true },
 	measurements: { type: String, required: true },
 	images: { type: [String], required: true },
-	column: { type: Number, required: true }
+	column: { type: Number, required: true },
+	visible: { type: Boolean, required: true, default: true },
 }, { versionKey: false })
 
 export default models?.Product as Model<Document & IProduct> || model<IProduct>('Product', schema, 'products')

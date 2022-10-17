@@ -61,6 +61,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<APIProduct | Le
 				break
 			}
 
+			case 'PATCH': {
+				console.log(req.body.visible)
+				await Products.updateOne({ _id: query.id }, { visible: req.body.visible })
+				await res.revalidate('/products')
+				break
+			}
+
 			case 'DELETE': {
 				await dbConnect()
 				await Products.deleteOne({ _id: query.id })
