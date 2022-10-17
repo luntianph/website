@@ -50,7 +50,7 @@ const NavItem: FC<NavItemProp> = ({ text, path, isHome }) => {
 
 	const className = cn({
 		'border-green-700 text-gray-900 ': isMatch,
-		'border-transparent text-gray-500 hover:text-gray-900': !isMatch,
+		'border-transparent text-gray-600 hover:text-gray-900': !isMatch,
 	}, 'h-full border-b-2 inline-flex justify-center items-center cursor-pointer')
 
 	return (

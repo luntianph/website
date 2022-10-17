@@ -37,6 +37,8 @@ const Home: NextPage = () => {
 	})
 	const [isOpen, setIsOpen] = useState(false)
 	const { query } = useRouter()
+	const [hasToastedError, setHasToastedError] = useState(false)
+	const [hasToastedState, setHasToastedState] = useState(false)
 
 	async function onSubmit(data: FormSchema) {
 		try {
@@ -51,14 +53,16 @@ const Home: NextPage = () => {
 	}
 
 	useEffect(() => {
-		if (query.state == CHECKOUT_SUCCESS_STATE) {
+		if (query.state == CHECKOUT_SUCCESS_STATE && !hasToastedState) {
 			toastSuccess('We have received your order. Payment instructions have been emailed to you.')
+			setHasToastedState(true)
 		}
 
-		if (typeof query.error == 'string') {
+		if (typeof query.error == 'string' && !hasToastedError) {
 			toastError(query.error)
+			setHasToastedError(true)
 		}
-	}, [query])
+	}, [query, hasToastedError, hasToastedState])
 
 	// shows modal only once in a week
 	useEffect(() => {
